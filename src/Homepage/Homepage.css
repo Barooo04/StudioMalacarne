@@ -1,0 +1,454 @@
+* {
+    overflow-x: hidden;
+    font-family: "Quicksand", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.homepage-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0;
+    padding-top: 0;
+}
+
+.navbar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0c004f;
+    animation: slideDown 1.5s ease forwards;
+    transform: translateY(-100%);
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.navbar-logo {
+    position: absolute;
+    left: 40px;
+    animation: slideRight 2s ease forwards;
+    color: white;
+}
+
+.navbar-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    padding: 20px 60px; 
+}
+
+.navbar-links p {
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.navbar-links p:hover {
+    color: rgb(200, 200, 200);
+    transition: color 0.3s ease;
+}
+
+.navbar-contacts {
+    position: absolute;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    color: white;
+}
+
+.hero-container {
+    width: 95%;
+    margin: 0 auto;
+    height: 70vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    border-radius: 10px;
+    background-color: #f5f5f5;
+}
+
+.hero-content {
+    width: 60%;
+    padding: 20px;
+}
+
+.title {
+    padding: 0;
+    margin: 0;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    animation: fadeIn 3s ease forwards;
+}   
+
+.subtitle {
+    padding: 0;
+    margin: 0;
+    font-size: 3.5rem;
+    text-align: center;
+    font-weight: bold;
+    background: linear-gradient(45deg, rgb(134, 134, 134), #0c004f, rgb(134, 134, 134)); /* Gradiente lineare */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: fadeIn 3s ease forwards;
+}
+
+.description {
+    padding: 12px 24px;
+    margin: 0;
+    margin-top: 20px;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: #0c004f;
+    color: white;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: fit-content;
+    margin: 20px auto 0 auto;
+    animation: fadeIn 3s ease forwards;
+}
+
+.description:hover {
+    background-color: #1a0080;
+    transform: scale(1.02);
+    box-shadow: 0 4px 15px rgba(12, 0, 79, 0.2);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes arrowMove {
+    0% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(5px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.description svg {
+    animation: arrowMove 0.5s ease-in-out infinite;
+}
+
+.hero-chat {
+    width: 40%;
+    height: 90%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.chat-messages::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.03;
+    background-image: 
+        linear-gradient(90deg, #0c004f 1px, transparent 1px),
+        linear-gradient(0deg, #0c004f 1px, transparent 1px);
+    background-size: 20px 20px;
+    background-color: white;
+    pointer-events: none;
+}
+
+.message {
+    padding: 10px 15px;
+    border-radius: 15px;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+.message.assistant {
+    background-color: #0c004f;
+    color: white;
+    align-self: flex-start;
+    border-bottom-left-radius: 5px;
+}
+
+.message.user {
+    background-color: #e5e5e5;
+    color: black;
+    align-self: flex-end;
+    border-bottom-right-radius: 5px;
+}
+
+.quick-questions {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    animation: fadeIn 1.5s ease;
+}
+
+.quick-questions-title {
+    margin: 0;
+    padding: 0;
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.quick-questions-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.quick-questions-buttons button {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+
+.quick-questions-buttons button:hover {
+    background-color: #e5e5e5;
+    border-color: #ccc;
+    transform: translateX(5px);
+}
+
+.chat-input-container {
+    display: flex;
+    padding: 15px;
+    border-top: 1px solid #eee;
+    background-color: white;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.chat-input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    margin-right: 8px;
+    font-size: 14px;
+}
+
+.chat-send {
+    padding: 8px 15px;
+    background-color: #0c004f;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.chat-send:hover {
+    background-color: #1a0080;
+}
+
+.chi-siamo-container {
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 50px 0;
+}
+
+.chi-siamo-content {
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.chi-siamo-title {
+    font-size: 3.5rem;
+    font-weight: bold;
+    background: linear-gradient(45deg, rgb(183, 183, 183), #0c004f, rgb(134, 134, 134)); /* Gradiente lineare */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.chi-siamo-text {
+    margin: 0;
+    padding: 0;
+    font-size: 1.2rem;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 1s ease;
+    margin-top: 100px;
+}
+
+.chi-siamo-text.visible {
+    opacity: 1;
+    transform: translateY(-50px);
+}
+
+.chi-siamo-image {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 40px;
+    width: 100%;
+    overflow: visible;
+}
+
+.team-member {
+    flex: 1;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    margin: 10px;
+}
+
+.team-member:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 30px rgba(0,0,0,0.15);
+}
+
+.image-container {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.team-member img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.5s ease;
+}
+
+.team-member .image-container:hover img {
+    transform: scale(1.1);
+}
+
+.team-member h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #0c004f;
+}
+
+.team-member p {
+    margin: 10px 0;
+    font-size: 1rem;
+    color: #666;
+}
+
+.social-icons {
+    display: flex;
+    gap: 20px;
+    margin-top: 15px;
+    padding: 10px;
+}
+
+.social-icons svg {
+    font-size: 1.5rem;
+    color: #0c004f;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.social-icons svg:hover {
+    color: #1a0080;
+    transform: translateY(-2px);
+}
+
+.scroll-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 40px;
+    height: 40px;
+    background-color: #0c004f;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: fadeIn 0.3s ease forwards;
+    z-index: 1000;
+}
+
+.scroll-to-top:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    background-color: #1a0080;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
