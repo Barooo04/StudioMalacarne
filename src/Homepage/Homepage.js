@@ -6,6 +6,7 @@ import { faLinkedin, faFacebookF, faWhatsapp } from '@fortawesome/free-brands-sv
 
 import teamMember1 from '../Images/prova1.png';
 import teamMember2 from '../Images/prova2.png';
+
 const Homepage = () => {
   const [messages, setMessages] = useState([
     {
@@ -16,9 +17,11 @@ const Homepage = () => {
   ]);
   
   const chatInputRef = useRef(null);
-  const textRef = useRef(null);
+  const chiSiamoTextRef = useRef(null);
+  const loStudioTextRef = useRef(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [showQuickQuestions, setShowQuickQuestions] = useState(true);
+
 
   const handleDescriptionClick = () => {
     chatInputRef.current.focus();
@@ -41,13 +44,21 @@ const Homepage = () => {
       { threshold: 0.1 }
     );
 
-    if (textRef.current) {
-      observer.observe(textRef.current);
+    if (chiSiamoTextRef.current) {
+      observer.observe(chiSiamoTextRef.current);
+    }
+
+    if (loStudioTextRef.current) {
+      observer.observe(loStudioTextRef.current);
     }
 
     return () => {
-      if (textRef.current) {
-        observer.unobserve(textRef.current);
+      if (chiSiamoTextRef.current) {
+        observer.unobserve(chiSiamoTextRef.current);
+      }
+
+      if (loStudioTextRef.current) {
+        observer.unobserve(loStudioTextRef.current);
       }
     };
   }, []);
@@ -80,6 +91,7 @@ const Homepage = () => {
     }]);
     setShowQuickQuestions(false);
   };
+
 
   return (
     <div className="homepage-container" id="hero-container">
@@ -147,7 +159,7 @@ const Homepage = () => {
       <div className="chi-siamo-container" id="chi-siamo-container">
         <div className="chi-siamo-content">
           <p className="chi-siamo-title">Chi Siamo</p>
-          <p className="chi-siamo-text" ref={textRef}>
+          <p className="chi-siamo-text" ref={chiSiamoTextRef}>
             Lo Studio Malacarne nasce dalla passione e dall'esperienza di due fratelli, uniti dalla stessa visione: offrire consulenza professionale su misura per aziende e professionisti.<br />
 
             Con sedi a Castelfranco e Ponsacco, il nostro studio combina competenze specialistiche in settori diversi per garantire un servizio completo e personalizzato.<br />
@@ -182,6 +194,54 @@ const Homepage = () => {
               <FontAwesomeIcon icon={faLinkedin} />
               <FontAwesomeIcon icon={faFacebookF} />
               <FontAwesomeIcon icon={faWhatsapp} />
+            </div>
+          </div>
+        </div>
+
+        <div className="lo-studio-container" id="lo-studio-container">
+          <div className="lo-studio-content">
+            <p className="lo-studio-title">Lo Studio</p>
+            <p className="lo-studio-text" ref={loStudioTextRef}>
+              Il nostro studio professionale si articola in due sedi strategicamente posizionate per servire al meglio la nostra clientela. La sede storica di Castelfranco, specializzata nella consulenza fiscale e tributaria per le piccole e medie imprese, e la sede di Ponsacco, focalizzata sulla gestione contabile e sulla consulenza del lavoro. Questa duplice presenza ci permette di offrire un servizio completo e specializzato, combinando l'expertise di entrambe le sedi per garantire soluzioni personalizzate per ogni cliente.
+            </p>
+          </div>
+          <div className="lo-studio-castelfranco">
+            <img 
+              src="/studio-castelfranco.jpg" 
+              alt="Studio Castelfranco" 
+              className="studio-image"
+            />
+            <div className="studio-content" style={{marginLeft: '20px'}}>
+              <h2 className="studio-title">Castelfranco</h2>
+              <p className="studio-description">
+                La nostra sede storica di Castelfranco è specializzata nella consulenza fiscale 
+                e tributaria per le piccole e medie imprese. Con anni di esperienza nel settore, 
+                offriamo soluzioni personalizzate per ogni esigenza aziendale.
+              </p>
+              <a href="tel:+390571000000" className="studio-phone">
+                <FontAwesomeIcon icon={faPhone} />
+                +39 0571 000000
+              </a>
+            </div>
+          </div>
+
+          <div className="lo-studio-ponsacco">
+            <img 
+              src="/studio-ponsacco.jpg" 
+              alt="Studio Ponsacco" 
+              className="studio-image"
+            />
+            <div className="studio-content" style={{marginRight: '20px', textAlign: 'right'}}>
+              <h2 className="studio-title">Ponsacco</h2>
+              <p className="studio-description">
+                La sede di Ponsacco è il nostro centro specializzato nella gestione contabile 
+                e nella consulenza del lavoro. Il nostro team di esperti è pronto ad assistere 
+                professionisti e aziende con servizi mirati e consulenza specialistica.
+              </p>
+              <a href="tel:+390587000000" className="studio-phone" style={{marginLeft: 'auto'}}>
+                <FontAwesomeIcon icon={faPhone} />
+                +39 0587 000000
+              </a>
             </div>
           </div>
         </div>
