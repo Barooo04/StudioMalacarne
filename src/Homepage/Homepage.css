@@ -12,6 +12,7 @@
     gap: 20px;
     padding: 0;
     padding-top: 0;
+    overflow-x: hidden;
 }
 
 .navbar {
@@ -20,6 +21,10 @@
     justify-content: center;
     align-items: center;
     background-color: #0c004f;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
     animation: slideDown 1.5s ease forwards;
     transform: translateY(-100%);
 }
@@ -32,12 +37,22 @@
         transform: translateY(0);
     }
 }
-
 .navbar-logo {
     position: absolute;
+    height: 100%;
     left: 40px;
     animation: slideRight 2s ease forwards;
-    color: white;
+}
+
+.navbar-logo img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+}
+
+.navbar-logo:hover {
+    cursor: pointer;
 }
 
 .navbar-links {
@@ -73,8 +88,10 @@
 }
 
 .hero-container {
+    margin-top: 80px;
     width: 95%;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
     height: 70vh;
     display: flex;
     justify-content: space-between;
@@ -555,3 +572,159 @@
     background-color: #1a0080;
     transform: translateY(-2px);
 }
+
+.p-iva-container {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}   
+
+.p-iva-title {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: #0c004f;
+}   
+
+.p-iva-text {
+    width: 80%;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #333;
+    transform: translateY(50px);
+    transition: all 1s ease;
+    margin-top: 50px;
+    opacity: 0;
+}   
+
+.p-iva-text.visible {
+    opacity: 1;
+    transform: translateY(-50px);
+}
+
+.scopri-piu-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    background-color: #0c004f;
+    color: white;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.scopri-piu-btn:hover {
+    background-color: #1a0080;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(12, 0, 79, 0.2);
+}
+
+.footer {
+    background-color: #0c004f;
+    color: white;
+    padding: 60px 0;
+    margin-top: 50px;
+}
+
+.footer-container {
+    width: 95%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
+}
+
+.footer-section {
+    padding: 20px;
+}
+
+.footer-logo {
+    width: 200px;
+    margin-bottom: 20px;
+    filter: brightness(0) invert(1);
+}
+
+.footer-contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.footer-input {
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.footer-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.footer-textarea {
+    height: 100px;
+    resize: none;
+}
+
+.footer-submit {
+    background-color: white;
+    color: #0c004f;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.footer-submit:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-2px);
+}
+
+.footer-locations {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.location {
+    margin-bottom: 20px;
+}
+
+.location-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.location-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.location-map {
+    width: 100%;
+    height: 200px;
+    border-radius: 8px;
+    border: none;
+    margin-top: 15px;
+}
+
+.footer-bottom {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+}
+

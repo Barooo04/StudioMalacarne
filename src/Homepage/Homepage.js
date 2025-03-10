@@ -6,6 +6,7 @@ import { faLinkedin, faFacebookF, faWhatsapp } from '@fortawesome/free-brands-sv
 
 import teamMember1 from '../Images/prova1.png';
 import teamMember2 from '../Images/prova2.png';
+import logo from '../Images/sm-reverse.png';
 
 const Homepage = () => {
   const [messages, setMessages] = useState([
@@ -19,6 +20,7 @@ const Homepage = () => {
   const chatInputRef = useRef(null);
   const chiSiamoTextRef = useRef(null);
   const loStudioTextRef = useRef(null);
+  const pIvaTextRef = useRef(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [showQuickQuestions, setShowQuickQuestions] = useState(true);
 
@@ -52,6 +54,10 @@ const Homepage = () => {
       observer.observe(loStudioTextRef.current);
     }
 
+    if (pIvaTextRef.current) {
+      observer.observe(pIvaTextRef.current);
+    }
+
     return () => {
       if (chiSiamoTextRef.current) {
         observer.unobserve(chiSiamoTextRef.current);
@@ -59,6 +65,10 @@ const Homepage = () => {
 
       if (loStudioTextRef.current) {
         observer.unobserve(loStudioTextRef.current);
+      }
+
+      if (pIvaTextRef.current) {
+        observer.unobserve(pIvaTextRef.current);
       }
     };
   }, []);
@@ -96,8 +106,8 @@ const Homepage = () => {
   return (
     <div className="homepage-container" id="hero-container">
       <div className="navbar">
-        <div className="navbar-logo">
-          <p>LOGO</p>
+        <div className="navbar-logo" onClick={() => scrollTo('hero-container')}>
+          <img src={logo} alt="Studio Malacarne Logo" />
         </div>
         <div className="navbar-links">
           <p onClick={() => scrollTo('hero-container')}>Home</p>
@@ -245,6 +255,24 @@ const Homepage = () => {
             </div>
           </div>
         </div>
+
+        <div className="p-iva-container" id="p-iva-container">
+          <p className="p-iva-title">Cosa è la P.IVA?</p>
+          <p className="p-iva-text" ref={pIvaTextRef}>
+            La Partita IVA è un codice identificativo fondamentale per le attività commerciali e professionali in Italia. 
+            Questo numero univoco di 11 cifre viene utilizzato per identificare in modo inequivocabile un'azienda o un professionista 
+            nei rapporti con l'amministrazione finanziaria. È essenziale per la fatturazione, la dichiarazione dei redditi 
+            e per tutti gli adempimenti fiscali previsti dalla legge italiana.
+          </p>
+          <a 
+            href="/piva" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="scopri-piu-btn"
+          >
+            Scopri di più
+          </a>
+        </div>
       </div>
 
       {showScrollTop && (
@@ -252,6 +280,72 @@ const Homepage = () => {
           <FontAwesomeIcon icon={faArrowUp} />
         </div>
       )}
+
+      <footer className="footer" id="contatti-container">
+        <div className="footer-container">
+          <div className="footer-section">
+            <img src={logo} alt="Studio Malacarne" className="footer-logo" />
+            <form className="footer-contact-form">
+              <input 
+                type="text" 
+                placeholder="Nome" 
+                className="footer-input" 
+              />
+              <input 
+                type="email" 
+                placeholder="Email" 
+                className="footer-input" 
+              />
+              <textarea 
+                placeholder="Messaggio" 
+                className="footer-input footer-textarea"
+              ></textarea>
+              <button type="submit" className="footer-submit">
+                Invia Messaggio
+              </button>
+            </form>
+          </div>
+
+          <div className="footer-section footer-locations">
+            <div className="location">
+              <h3 className="location-title">Castelfranco</h3>
+              <div className="location-info">
+                <p>Via Example, 123 - Castelfranco</p>
+                <p>Tel: +39 0571 000000</p>
+                <p>Lun-Ven: 9:00-18:00</p>
+              </div>
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=..." 
+                className="location-map" 
+                title="Sede Castelfranco"
+                loading="lazy"
+              ></iframe>
+            </div>
+          </div>
+
+          <div className="footer-section footer-locations">
+            <div className="location">
+              <h3 className="location-title">Ponsacco</h3>
+              <div className="location-info">
+                <p>Via Sample, 456 - Ponsacco</p>
+                <p>Tel: +39 0587 000000</p>
+                <p>Lun-Ven: 9:00-18:00</p>
+              </div>
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=..." 
+                className="location-map" 
+                title="Sede Ponsacco"
+                loading="lazy"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+
+        <div className="footer-bottom">
+          <p>© 2025 Studio Malacarne. Tutti i diritti riservati. | P.IVA 01234567890</p>
+          <p>Powered by <a href="https://www.hi-dev.it" target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none', color: 'white'}}>HiDev</a></p>
+        </div>
+      </footer>
     </div>
   );
 };
