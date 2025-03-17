@@ -130,6 +130,7 @@ const Homepage = () => {
             Domande? Chiedi pure <FontAwesomeIcon icon={faArrowRight} size="sm" style={{margin: '0', padding: '0'}}/>
           </p>
         </div>
+        <div className="chat-background"></div>
         <div className="hero-chat">
           <div className="chat-messages">
             {messages.map((message) => (
@@ -207,6 +208,7 @@ const Homepage = () => {
             </div>
           </div>
         </div>
+      </div>
 
         <div className="lo-studio-container" id="lo-studio-container">
           <div className="lo-studio-content">
@@ -273,7 +275,6 @@ const Homepage = () => {
             Scopri di più
           </a>
         </div>
-      </div>
 
       {showScrollTop && (
         <div className="scroll-to-top" onClick={scrollToTop}>

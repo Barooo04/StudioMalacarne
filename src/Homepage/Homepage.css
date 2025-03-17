@@ -99,6 +99,11 @@
     padding: 0 20px;
     border-radius: 10px;
     background-color: #f5f5f5;
+    position: relative;
+    background-image: url('../Images/bg5.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .hero-content {
@@ -118,7 +123,7 @@
 .subtitle {
     padding: 0;
     margin: 0;
-    font-size: 3.5rem;
+    font-size: 4rem;
     text-align: center;
     font-weight: bold;
     background: linear-gradient(45deg, rgb(134, 134, 134), #0c004f, rgb(134, 134, 134)); /* Gradiente lineare */
@@ -183,11 +188,23 @@
     height: 90%;
     background-color: white;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
     display: flex;
     flex-direction: column;
     position: relative;
-    overflow: hidden;
+    z-index: 2;
+    margin-right: 4.5%;
+}
+
+.chat-background {
+    position: absolute;
+    width: 38%;
+    height: 95%;
+    right: 4.75%;
+    top: 2.5%;
+    background-color: #0c004f;
+    border-radius: 10px;
+    z-index: 1;
 }
 
 .chat-messages {
@@ -310,14 +327,17 @@
 }
 
 .chi-siamo-container {
-    width: 95%;
-    margin: 0 auto;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
     padding: 50px 0;
+    background-image: url('../Images/bg2.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .chi-siamo-content {
@@ -338,7 +358,8 @@
 }
 
 .chi-siamo-text {
-    margin: 0;
+    width: 75%;
+    margin: 0 auto;
     padding: 0;
     font-size: 1.2rem;
     text-align: center;
@@ -472,24 +493,26 @@
 
 .lo-studio-container {
     width: 100%;
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 50px 0;
+    background-color: #061c6d;
+
 }
 
 .lo-studio-content {
-    width: 100%;
+    width: 95%;
+    margin: 0 auto;
     padding: 20px;
-    background-color: white;
+    background-color: transparent;
 }
 
 .lo-studio-title {
     font-size: 3.5rem;
     font-weight: bold;
-    color: #0c004f;
+    color: white;
     text-align: center;
     margin: 0;
     padding: 0;
@@ -504,6 +527,7 @@
     opacity: 0;
     transform: translateY(50px);
     transition: all 1s ease;
+    color: white;
 }
 
 .lo-studio-text.visible {
@@ -512,13 +536,14 @@
 }
 
 .lo-studio-castelfranco, .lo-studio-ponsacco {
+    width: 80%;
     display: flex;
     align-items: center;
     gap: 40px;
-    padding: 40px;
+    padding: 20px;
     margin: 20px 0;
-    background-color: #f5f5f5;
     border-radius: 10px;
+    background-color:white;
 }
 
 .lo-studio-ponsacco {
@@ -550,7 +575,7 @@
 .studio-description {
     font-size: 1.1rem;
     line-height: 1.6;
-    color: #333;
+    color: #0c004f;
     margin: 0;
 }
 
