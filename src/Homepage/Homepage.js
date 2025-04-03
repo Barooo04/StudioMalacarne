@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import './Homepage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faArrowRight, faArrowUp } from '@fortawesome/free-solid-svg-icons';
@@ -9,21 +9,119 @@ import teamMember2 from '../Images/prova2.png';
 import logo from '../Images/sm-reverse.png';
 
 const Homepage = () => {
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      text: "Ciao! Chiedimi tutto quello di cui hai bisogno!😊",
-      isAssistant: true
-    }
-  ]);
-  
   const chatInputRef = useRef(null);
   const chiSiamoTextRef = useRef(null);
   const loStudioTextRef = useRef(null);
   const pIvaTextRef = useRef(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [sessionUUID, setSessionUUID] = useState(localStorage.getItem('sessionUUID'));
+  const [isTyping, setIsTyping] = useState(false);
+  const [isChatActive, setIsChatActive] = useState(false);
+
+  const [messages, setMessages] = useState([
+    { id: 1, text: "Ciao! Come posso aiutarti oggi?", isAssistant: true }
+  ]);
+
   const [showQuickQuestions, setShowQuickQuestions] = useState(true);
 
+  const scrollToBottom = () => {
+    const messageContainer = document.querySelector('.chat-messages');
+    messageContainer.scrollTo({
+      top: messageContainer.scrollHeight,
+      behavior: 'smooth'
+    });
+  };
+
+  const startSession = async () => {
+    const uuid = '4eeba3552ad4cb0903ceb520cac83b6';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0MzY2NTE0MiwianRpIjoiYTMyNDk4NmMtMjJkZS00ZmViLWE5YmYtYzNjMzg5ZDk3NTA0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJhcGlfa2V5IjoiNzQ3YzVjYjkxNTE5MzZjZjI4MzlhYzNhZDE4ZTI4MDUxYmI4NmQ1MWQxNTM2OTM3YzgxNTY1NzM3MWQzNDM3ZSJ9LCJuYmYiOjE3NDM2NjUxNDJ9.7Lpg7u7NvDrhtDXI0BBjEcKOuQ_920cmEOzIr-yJo7o';
+    const url = `https://app.gpt-trainer.com/api/v1/chatbot/${uuid}/session/create`;
+    
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+      });
+      
+      if (!response.ok) {
+        throw new Error("Errore di rete", response.status);
+      }
+      
+      const data = await response.json();
+      setSessionUUID(data.uuid);
+      localStorage.setItem('sessionUUID', data.uuid);
+      return data.uuid;
+    } catch (error) {
+      console.error("Errore nella creazione della sessione:", error);
+      return null;
+    }
+  };
+
+  const sendMessage = async (message, uuid) => {
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0MzY2NTE0MiwianRpIjoiYTMyNDk4NmMtMjJkZS00ZmViLWE5YmYtYzNjMzg5ZDk3NTA0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJhcGlfa2V5IjoiNzQ3YzVjYjkxNTE5MzZjZjI4MzlhYzNhZDE4ZTI4MDUxYmI4NmQ1MWQxNTM2OTM3YzgxNTY1NzM3MWQzNDM3ZSJ9LCJuYmYiOjE3NDM2NjUxNDJ9.7Lpg7u7NvDrhtDXI0BBjEcKOuQ_920cmEOzIr-yJo7o';
+    const url = `https://app.gpt-trainer.com/api/v1/session/${uuid}/message/stream`;
+    
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ query: message })
+      });
+      
+      if (!response.ok) {
+        throw new Error("Errore di rete", response.status);
+      }
+      
+      return await response.text();
+    } catch (error) {
+      console.error("Errore nell'invio del messaggio:", error);
+      return "Mi dispiace, si è verificato un errore. Riprova più tardi.";
+    }
+  };
+
+  const handleSendMessage = async (message) => {
+    if (!message.trim()) return;
+
+    // Attiva l'animazione della chat
+    setIsChatActive(true);
+
+    // Aggiungi il messaggio dell'utente
+    setMessages(prev => [...prev, { 
+      id: prev.length + 1, 
+      text: message, 
+      isAssistant: false
+    }]);
+
+    // Mostra i pallini di caricamento
+    setIsTyping(true);
+    setShowQuickQuestions(false);
+
+    // Invia il messaggio al bot
+    const uuid = sessionUUID || await startSession();
+    if (uuid) {
+      const response = await sendMessage(message, uuid);
+      
+      // Rimuovi i pallini e aggiungi la risposta del bot
+      setIsTyping(false);
+      setMessages(prev => [...prev, { 
+        id: prev.length + 1, 
+        text: response, 
+        isAssistant: true
+      }]);
+    }
+
+    scrollToBottom();
+  };
+
+  const handleQuickQuestion = (question) => {
+    handleSendMessage(question);
+  };
 
   const handleDescriptionClick = () => {
     chatInputRef.current.focus();
@@ -43,7 +141,8 @@ const Homepage = () => {
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.1,
+       }
     );
 
     if (chiSiamoTextRef.current) {
@@ -93,51 +192,60 @@ const Homepage = () => {
     });
   };
 
-  const handleQuickQuestion = (question) => {
-    setMessages(prev => [...prev, {
-      id: prev.length + 1,
-      text: question,
-      isAssistant: false
-    }]);
-    setShowQuickQuestions(false);
-  };
-
-
   return (
     <div className="homepage-container" id="hero-container">
       <div className="navbar">
-        <div className="navbar-logo" onClick={() => scrollTo('hero-container')}>
-          <img src={logo} alt="Studio Malacarne Logo" />
+        <div className="top-contact-bar">
+          <div className="contact-location">
+            Castelfranco: <span>0571 489516</span>
+          </div>
+          <div class="contact-location">
+            Ponsacco: <span>0587 731777</span>
+          </div>
         </div>
-        <div className="navbar-links">
-          <p onClick={() => scrollTo('hero-container')}>Home</p>
-          <p onClick={() => scrollTo('chi-siamo-container')}>Chi Siamo</p>
-          <p onClick={() => scrollTo('lo-studio-container')}>Lo Studio</p>
-          <p onClick={() => scrollTo('p-iva-container')}>P.IVA</p>
-          <p onClick={() => scrollTo('contatti-container')}>Contatti</p>
-        </div>
-        <div className="navbar-contacts">
-          <FontAwesomeIcon className="phone-icon-text" icon={faPhone} />
-          <p className="phone-icon-text">+39 339 1234567</p>
+        <div className='navbar-nav'>
+          <div className="navbar-logo" onClick={() => scrollTo('hero-container')}>
+            <img src={logo} alt="Studio Malacarne Logo" />
+          </div>
+          <div className="navbar-links">
+            <p onClick={() => scrollTo('hero-container')}>Home</p>
+            <p onClick={() => scrollTo('chi-siamo-container')}>Chi Siamo</p>
+            <p onClick={() => scrollTo('lo-studio-container')}>Lo Studio</p>
+            <p onClick={() => scrollTo('p-iva-container')}>P.IVA</p>
+            <p onClick={() => scrollTo('contatti-container')}>Contatti</p>
+          </div>
+          <div className="navbar-button">
+            <FontAwesomeIcon icon={faWhatsapp} />
+            <p className="navbar-button-text">Scrivici!</p>
+          </div>
         </div>
       </div>
 
       <div className="hero-container">
-        <div className="hero-content">
+        <div className={`hero-content ${isChatActive ? 'chat-active' : ''}`}>
           <p className="title">STUDIO MALACARNE</p>
-          <p className="subtitle">Affidabilità e Competenza <br /> per la Tua Attività</p>
+          <p className="subtitle">Affidabilità e Competenza per la Tua Attività</p>
           <p className="description" onClick={handleDescriptionClick}>
             Domande? Chiedi pure <FontAwesomeIcon icon={faArrowRight} size="sm" style={{margin: '0', padding: '0'}}/>
           </p>
         </div>
-        <div className="chat-background"></div>
-        <div className="hero-chat">
-          <div className="chat-messages">
+        <div className={`chat-background  ${isChatActive ? 'chat-active' : ''}`}></div>
+        <div className={`hero-chat ${isChatActive ? 'chat-active' : ''}`}>
+          <div className="chat-messages" >
             {messages.map((message) => (
               <div key={message.id} className={`message ${message.isAssistant ? 'assistant' : 'user'}`}>
                 {message.text}
               </div>
             ))}
+            {isTyping && (
+              <div className="message assistant">
+                <div className="loading-dots">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            )}
             {showQuickQuestions && (
               <div className="quick-questions">
                 <p className="quick-questions-title">Domande Frequenti:</p>
@@ -161,8 +269,22 @@ const Homepage = () => {
               type="text" 
               placeholder="Scrivi un messaggio..." 
               className="chat-input"
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  handleSendMessage(e.target.value);
+                  e.target.value = '';
+                }
+              }}
             />
-            <button className="chat-send">Invia</button>
+            <button 
+              className="chat-send"
+              onClick={() => {
+                handleSendMessage(chatInputRef.current.value);
+                chatInputRef.current.value = '';
+              }}
+            >
+              Invia
+            </button>
           </div>
         </div>
       </div>
