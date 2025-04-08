@@ -6,7 +6,8 @@ import { faLinkedin, faFacebookF, faWhatsapp } from '@fortawesome/free-brands-sv
 
 import teamMember1 from '../Images/prova1.png';
 import teamMember2 from '../Images/prova2.png';
-import logo from '../Images/sm-reverse.png';
+//import logo from '../Images/sm-reverse.png';
+import logo from '../Images/logo.png';
 
 const Homepage = () => {
   const chatInputRef = useRef(null);
@@ -23,17 +24,25 @@ const Homepage = () => {
   ]);
 
   const [showQuickQuestions, setShowQuickQuestions] = useState(true);
+  const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
     const messageContainer = document.querySelector('.chat-messages');
-    messageContainer.scrollTo({
-      top: messageContainer.scrollHeight,
-      behavior: 'smooth'
-    });
+    if (messageContainer) {
+      messageContainer.scrollTo({
+        top: messageContainer.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
   };
 
+  // Effetto per scrollare automaticamente quando vengono aggiunti nuovi messaggi
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isTyping]);
+
   const startSession = async () => {
-    const uuid = '4eeba3552ad4cb0903ceb520cac83b6';
+    const uuid = '74eeba3552ad4cb0903ceb520cac83b6';
     const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0MzY2NTE0MiwianRpIjoiYTMyNDk4NmMtMjJkZS00ZmViLWE5YmYtYzNjMzg5ZDk3NTA0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJhcGlfa2V5IjoiNzQ3YzVjYjkxNTE5MzZjZjI4MzlhYzNhZDE4ZTI4MDUxYmI4NmQ1MWQxNTM2OTM3YzgxNTY1NzM3MWQzNDM3ZSJ9LCJuYmYiOjE3NDM2NjUxNDJ9.7Lpg7u7NvDrhtDXI0BBjEcKOuQ_920cmEOzIr-yJo7o';
     const url = `https://app.gpt-trainer.com/api/v1/chatbot/${uuid}/session/create`;
     
@@ -199,7 +208,7 @@ const Homepage = () => {
           <div className="contact-location">
             Castelfranco: <span>0571 489516</span>
           </div>
-          <div class="contact-location">
+          <div className="contact-location">
             Ponsacco: <span>0587 731777</span>
           </div>
         </div>
@@ -262,6 +271,7 @@ const Homepage = () => {
                 </div>
               </div>
             )}
+            <div ref={messagesEndRef} />
           </div>
           <div className="chat-input-container">
             <input 
