@@ -1,9 +1,8 @@
 * {
     overflow-x: hidden;
-    font-family: "Cormorant", serif;
+    font-family: "EB Garamond", serif;
     font-optical-sizing: auto;
     font-style: normal;
-    font-weight: bold !important;
 }
 
 .homepage-container {
@@ -167,14 +166,11 @@
 .title {
     padding: 0;
     margin: 0;
-    font-size: 3rem;
+    font-size: 3.5rem;
     font-weight: bold !important;
     text-align: center;
     animation: fadeIn 3s ease forwards;
-    background: linear-gradient(45deg, rgb(134, 134, 134), #587892, rgb(134, 134, 134)); /* Gradiente lineare */
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: #587892;
 }   
 
 .subtitle {
@@ -374,7 +370,7 @@
     border-radius: 15px;
     padding: 10px 15px;
     font-size: 0.9rem;
-    color: #587892;
+    color: black;
     cursor: pointer;
     transition: all 0.3s ease;
     text-align: left;
@@ -451,8 +447,7 @@
 }
 
 .chi-siamo-text {
-    width: 75%;
-    margin: 0 auto;
+    margin: 0;
     padding: 0;
     font-size: 1.2rem;
     text-align: center;
