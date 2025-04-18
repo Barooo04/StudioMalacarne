@@ -16,16 +16,17 @@ const Homepage = () => {
   const loStudioTextRef = useRef(null);
   const pIvaTextRef = useRef(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [sessionUUID, setSessionUUID] = useState(localStorage.getItem('sessionUUID'));
-  const [isTyping, setIsTyping] = useState(false);
-  const [isChatActive, setIsChatActive] = useState(false);
-
+  const [threadId, setThreadId] = useState(null);
   const [messages, setMessages] = useState([
     { id: 1, text: "Ciao! Come posso aiutarti oggi?", isAssistant: true }
   ]);
-
+  const [input, setInput] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const [isChatActive, setIsChatActive] = useState(false);
   const [showQuickQuestions, setShowQuickQuestions] = useState(true);
   const messagesEndRef = useRef(null);
+
+  const API = "https://test-til5.onrender.com/api";
 
   const scrollToBottom = () => {
     const messageContainer = document.querySelector('.chat-messages');
@@ -42,86 +43,144 @@ const Homepage = () => {
     scrollToBottom();
   }, [messages, isTyping]);
 
-  const startSession = async () => {
-    const uuid = '74eeba3552ad4cb0903ceb520cac83b6';
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0MzY2NTE0MiwianRpIjoiYTMyNDk4NmMtMjJkZS00ZmViLWE5YmYtYzNjMzg5ZDk3NTA0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJhcGlfa2V5IjoiNzQ3YzVjYjkxNTE5MzZjZjI4MzlhYzNhZDE4ZTI4MDUxYmI4NmQ1MWQxNTM2OTM3YzgxNTY1NzM3MWQzNDM3ZSJ9LCJuYmYiOjE3NDM2NjUxNDJ9.7Lpg7u7NvDrhtDXI0BBjEcKOuQ_920cmEOzIr-yJo7o';
-    const url = `https://app.gpt-trainer.com/api/v1/chatbot/${uuid}/session/create`;
-    
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-      });
-      
-      if (!response.ok) {
-        throw new Error("Errore di rete", response.status);
-      }
-      
-      const data = await response.json();
-      setSessionUUID(data.uuid);
-      localStorage.setItem('sessionUUID', data.uuid);
-      return data.uuid;
-    } catch (error) {
-      console.error("Errore nella creazione della sessione:", error);
-      return null;
+  const extractText = (content) => {
+    if (typeof content === 'string') return content;
+    if (Array.isArray(content)) {
+      return content.map(item => item.text || item).join('\n');
     }
-  };
-
-  const sendMessage = async (message, uuid) => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0MzY2NTE0MiwianRpIjoiYTMyNDk4NmMtMjJkZS00ZmViLWE5YmYtYzNjMzg5ZDk3NTA0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJhcGlfa2V5IjoiNzQ3YzVjYjkxNTE5MzZjZjI4MzlhYzNhZDE4ZTI4MDUxYmI4NmQ1MWQxNTM2OTM3YzgxNTY1NzM3MWQzNDM3ZSJ9LCJuYmYiOjE3NDM2NjUxNDJ9.7Lpg7u7NvDrhtDXI0BBjEcKOuQ_920cmEOzIr-yJo7o';
-    const url = `https://app.gpt-trainer.com/api/v1/session/${uuid}/message/stream`;
-    
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({ query: message })
-      });
-      
-      if (!response.ok) {
-        throw new Error("Errore di rete", response.status);
-      }
-      
-      return await response.text();
-    } catch (error) {
-      console.error("Errore nell'invio del messaggio:", error);
-      return "Mi dispiace, si è verificato un errore. Riprova più tardi.";
-    }
+    return JSON.stringify(content);
   };
 
   const handleSendMessage = async (message) => {
     if (!message.trim()) return;
 
-    // Attiva l'animazione della chat
     setIsChatActive(true);
-
-    // Aggiungi il messaggio dell'utente
     setMessages(prev => [...prev, { 
       id: prev.length + 1, 
       text: message, 
       isAssistant: false
     }]);
 
-    // Mostra i pallini di caricamento
     setIsTyping(true);
     setShowQuickQuestions(false);
 
-    // Invia il messaggio al bot
-    const uuid = sessionUUID || await startSession();
-    if (uuid) {
-      const response = await sendMessage(message, uuid);
+    try {
+      let currentThreadId = threadId;
       
-      // Rimuovi i pallini e aggiungi la risposta del bot
+      // Prima creiamo una sessione se non esiste
+      if (!currentThreadId) {
+        console.log("Creazione nuova sessione con messaggio:", message);
+        const sessionResponse = await fetch(`${API}/conversation`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ message: message })
+        });
+
+        if (!sessionResponse.ok) {
+          throw new Error("Errore nella creazione della sessione");
+        }
+
+        const sessionData = await sessionResponse.json();
+        console.log("Risposta creazione sessione:", sessionData);
+        currentThreadId = sessionData.threadId;
+        setThreadId(currentThreadId);
+      }
+
+      console.log("Invio messaggio con threadId:", currentThreadId);
+      console.log("Contenuto messaggio:", message);
+      
+      // Poi inviamo il messaggio
+      const conv = await fetch(`${API}/conversation`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+          threadId: currentThreadId, 
+          message: message 
+        })
+      });
+
+      if (!conv.ok) {
+        throw new Error("Errore nella risposta del server");
+      }
+
+      const response = await conv.json();
+      console.log("Risposta completa dal server:", response);
+
+      // Troviamo l'ultimo messaggio dell'assistente
+      const assistantMessage = response.messages.find(msg => msg.role === 'assistant');
+      console.log("Messaggio dell'assistente:", assistantMessage);
+
+      if (assistantMessage) {
+        setIsTyping(false);
+        setMessages(prev => [...prev, { 
+          id: prev.length + 1, 
+          text: extractText(assistantMessage.content[0]?.text?.value || assistantMessage.content), 
+          isAssistant: true
+        }]);
+
+        // Analisi della conversazione
+        console.log("Invio messaggi per analisi:", response.messages);
+        const info = await fetch(`${API}/analyze`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ 
+            threadId: currentThreadId,
+            messages: response.messages.map(msg => ({
+              role: msg.role,
+              content: msg.content[0]?.text?.value || msg.content
+            }))
+          })
+        }).then(r => r.json());
+
+        console.log("Risultato analisi:", info);
+
+        // Verifica se tutti i campi sono valorizzati
+        const allFieldsFilled = Object.values(info).every(value => value && value.trim() !== '');
+        
+        if (allFieldsFilled) {
+          // Invia i dati per email
+          try {
+            await fetch(`${API}/send-email`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                to: 'simone@example.com',
+                subject: 'Nuovo contatto dal sito',
+                data: info
+              })
+            });
+
+            // Mostra il messaggio di ringraziamento
+            setMessages(prev => [...prev, { 
+              id: prev.length + 1, 
+              text: "Grazie, ti contatteremo a breve!", 
+              isAssistant: true
+            }]);
+
+            // Chiudi la chat dopo 3 secondi
+            setTimeout(() => {
+              setIsChatActive(false);
+              setShowQuickQuestions(true);
+            }, 3000);
+          } catch (error) {
+            console.error("Errore nell'invio dell'email:", error);
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Errore:", error);
       setIsTyping(false);
       setMessages(prev => [...prev, { 
         id: prev.length + 1, 
-        text: response, 
+        text: "Mi dispiace, si è verificato un errore. Riprova più tardi.", 
         isAssistant: true
       }]);
     }
