@@ -7,8 +7,9 @@ import { faLinkedin, faFacebookF, faWhatsapp } from '@fortawesome/free-brands-sv
 import teamMember1 from '../Images/prova1.png';
 import teamMember2 from '../Images/prova2.png';
 //import logo from '../Images/sm-reverse.png';
-import logo from '../Images/LogoMesteso.png';
-import logo2 from '../Images/LogoM1.png';
+import logo from '../Images/logoChiaro.png';
+import logo2 from '../Images/logoEsteso.png';
+import logo3 from '../Images/logoSimbolo.png';
 
 const Homepage = () => {
   const chatInputRef = useRef(null);
@@ -292,6 +293,7 @@ const Homepage = () => {
 
       <div className="hero-container">
         <div className={`hero-content ${isChatActive ? 'chat-active' : ''}`}>
+          <img src={logo3} alt="Studio Malacarne Logo Esteso" className="hero-logo" />
           <p className="title">STUDIO MALACARNE</p>
           <p className="subtitle">Affidabilità e Competenza per la Tua Attività</p>
           <p className="description" onClick={handleDescriptionClick}>
@@ -477,7 +479,7 @@ const Homepage = () => {
       <footer className="footer" id="contatti-container">
         <div className="footer-container">
           <div className="footer-section">
-            <img src={logo2} alt="Studio Malacarne" className="footer-logo" />
+            <img src={logo} alt="Studio Malacarne" className="footer-logo" />
             <form className="footer-contact-form">
               <input 
                 type="text" 

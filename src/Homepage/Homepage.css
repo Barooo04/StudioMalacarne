@@ -157,6 +157,15 @@
     transition: transform 1s ease, opacity 1s ease;
 }
 
+.hero-logo {
+    width: 15%;
+    max-width: 400px;
+    height: auto;
+    margin: 0 auto 20px;
+    display: block;
+    animation: fadeIn 3s ease forwards;
+}
+
 .hero-content.chat-active {
     transform: translateX(-100%);
     width: 0%;
