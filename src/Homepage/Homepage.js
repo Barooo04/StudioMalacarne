@@ -7,9 +7,8 @@ import { faLinkedin, faFacebookF, faWhatsapp } from '@fortawesome/free-brands-sv
 import teamMember1 from '../Images/prova1.png';
 import teamMember2 from '../Images/prova2.png';
 //import logo from '../Images/sm-reverse.png';
-import logo from '../Images/logoChiaro.png';
-import logo2 from '../Images/logoEsteso.png';
-import logo3 from '../Images/logoSimbolo.png';
+import logo from '../Images/18.png';
+import logo3 from '../Images/logoHero.png';
 
 const Homepage = () => {
   const chatInputRef = useRef(null);
