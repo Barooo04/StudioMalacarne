@@ -26,7 +26,7 @@ const Homepage = () => {
   const [showQuickQuestions, setShowQuickQuestions] = useState(true);
   const messagesEndRef = useRef(null);
 
-  const API = "https://test-til5.onrender.com/api";
+  const API = "https://servermalacarne.onrender.com/api";
 
   const scrollToBottom = () => {
     const messageContainer = document.querySelector('.chat-messages');
@@ -133,45 +133,69 @@ const Homepage = () => {
             threadId: currentThreadId,
             messages: response.messages.map(msg => ({
               role: msg.role,
-              content: msg.content[0]?.text?.value || msg.content
+              content: typeof msg.content === 'string' ? msg.content : 
+                      Array.isArray(msg.content) ? msg.content[0]?.text?.value || '' :
+                      msg.content?.text?.value || ''
             }))
           })
-        }).then(r => r.json());
+        });
 
-        console.log("Risultato analisi:", info);
+        let infoData;
+        try {
+          const text = await info.text(); // Prima otteniamo il testo della risposta
+          console.log('Risposta raw dal server:', text); // Log per debug
+          infoData = JSON.parse(text); // Poi proviamo a parsarlo
+        } catch (error) {
+          console.error('Errore nel parsing della risposta:', error);
+          return;
+        }
 
-        // Verifica se tutti i campi sono valorizzati
-        const allFieldsFilled = Object.values(info).every(value => value && value.trim() !== '');
-        
-        if (allFieldsFilled) {
-          // Invia i dati per email
-          try {
-            await fetch(`${API}/send-email`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                to: 'simone@example.com',
-                subject: 'Nuovo contatto dal sito',
-                data: info
-              })
-            });
+        console.log("Risultato analisi:", infoData);
 
-            // Mostra il messaggio di ringraziamento
-            setMessages(prev => [...prev, { 
-              id: prev.length + 1, 
-              text: "Grazie, ti contatteremo a breve!", 
-              isAssistant: true
-            }]);
+        // Se la risposta è 'finished', termina la conversazione
+        if (infoData.status === 'finished') {
+          // Mostra il messaggio di ringraziamento
+          setMessages(prev => [...prev, { 
+            id: prev.length + 1, 
+            text: "Grazie per averci contattato! Ti risponderemo al più presto.", 
+            isAssistant: true
+          }]);
 
-            // Chiudi la chat dopo 3 secondi
-            setTimeout(() => {
-              setIsChatActive(false);
-              setShowQuickQuestions(true);
-            }, 3000);
-          } catch (error) {
-            console.error("Errore nell'invio dell'email:", error);
+          // Disabilita completamente la chat
+          setIsChatActive(false);
+          setShowQuickQuestions(false);
+          
+          // Disabilita l'input
+          if (chatInputRef.current) {
+            chatInputRef.current.disabled = true;
+          }
+          
+          return;
+        }
+
+        // Se non è 'finished', continua con la conversazione
+        if (infoData && typeof infoData === 'object') {
+          const allFieldsFilled = Object.values(infoData).every(value => 
+            value && (typeof value === 'string' ? value.trim() !== '' : true)
+          );
+          
+          if (allFieldsFilled) {
+            // Invia i dati per email
+            try {
+              await fetch(`${API}/send-email`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  to: 'simone@example.com',
+                  subject: 'Nuovo contatto dal sito',
+                  data: infoData
+                })
+              });
+            } catch (error) {
+              console.error("Errore nell'invio dell'email:", error);
+            }
           }
         }
       }
