@@ -3,12 +3,13 @@ import './Homepage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPhone, faArrowRight, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { faLinkedin, faFacebookF, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import ReactMarkdown from 'react-markdown';
 
 import teamMember1 from '../Images/prova1.png';
 import teamMember2 from '../Images/prova2.png';
 //import logo from '../Images/sm-reverse.png';
-import logo from '../Images/18.png';
-import logo3 from '../Images/logoHero.png';
+import logo from '../Images/Mblu.png';
+import logo3 from '../Images/Mbianco.png';
 
 const Homepage = () => {
   const chatInputRef = useRef(null);
@@ -328,7 +329,11 @@ const Homepage = () => {
           <div className="chat-messages" >
             {messages.map((message) => (
               <div key={message.id} className={`message ${message.isAssistant ? 'assistant' : 'user'}`}>
-                {message.text}
+                {message.isAssistant ? (
+                  <ReactMarkdown>{message.text}</ReactMarkdown>
+                ) : (
+                  message.text
+                )}
               </div>
             ))}
             {isTyping && (

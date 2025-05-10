@@ -309,38 +309,55 @@
     border-bottom-left-radius: 5px;
 }
 
-.message.assistant .loading-dots {
-    display: flex;
-    gap: 4px;
-    padding: 5px;
+.message.assistant p {
+    margin: 0;
+    padding: 0;
 }
 
-.message.assistant .loading-dots span {
-    width: 6px;
-    height: 6px;
-    background-color: white;
-    border-radius: 50%;
-    animation: loading 1.4s infinite;
+.message.assistant strong {
+    font-weight: bold;
 }
 
-.message.assistant .loading-dots span:nth-child(2) {
-    animation-delay: 0.2s;
+.message.assistant em {
+    font-style: italic;
 }
 
-.message.assistant .loading-dots span:nth-child(3) {
-    animation-delay: 0.4s;
+.message.assistant ul, .message.assistant ol {
+    margin: 8px 0;
+    padding-left: 20px;
 }
 
-@keyframes loading {
-    0% {
-        opacity: 0.2;
-    }
-    20% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0.2;
-    }
+.message.assistant li {
+    margin: 4px 0;
+}
+
+.message.assistant code {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+.message.assistant pre {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 8px;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin: 8px 0;
+}
+
+.message.assistant pre code {
+    background-color: transparent;
+    padding: 0;
+}
+
+.message.assistant a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.message.assistant a:hover {
+    color: #ddd;
 }
 
 .message.user {
