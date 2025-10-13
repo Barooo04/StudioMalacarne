@@ -1,21 +1,24 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './Homepage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhone, faArrowRight, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faPhone, faArrowRight, faArrowUp, faHeadphones, faChartLine, faRobot, faHandsHelping, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { faLinkedin, faFacebookF, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import ReactMarkdown from 'react-markdown';
 
-import teamMember1 from '../Images/prova1.png';
-import teamMember2 from '../Images/prova2.png';
+import teamMember1 from '../Images/MM-nosfondo.png';
+import teamMember2 from '../Images/SM-nosfondo.png';
 //import logo from '../Images/sm-reverse.png';
-import logo from '../Images/Mblu.png';
-import logo3 from '../Images/Mbianco.png';
+import logo from '../Images/logoM2.png';
+import logo3 from '../Images/logoM1.png';
 
 const Homepage = () => {
   const chatInputRef = useRef(null);
   const chiSiamoTextRef = useRef(null);
+  const servicesSectionRef = useRef(null);
   const loStudioTextRef = useRef(null);
   const pIvaTextRef = useRef(null);
+  const methodDescriptionRef = useRef(null);
+  const servicesDescriptionRef = useRef(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [threadId, setThreadId] = useState(null);
   const [messages, setMessages] = useState([
@@ -25,6 +28,9 @@ const Homepage = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [isChatActive, setIsChatActive] = useState(false);
   const [showQuickQuestions, setShowQuickQuestions] = useState(true);
+  const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
+  const [slideDirection, setSlideDirection] = useState('right'); // 'left' or 'right'
+  const [isAnimating, setIsAnimating] = useState(false);
   const messagesEndRef = useRef(null);
 
   const API = "https://servermalacarne.onrender.com/api";
@@ -251,6 +257,14 @@ const Homepage = () => {
       observer.observe(pIvaTextRef.current);
     }
 
+    if (methodDescriptionRef.current) {
+      observer.observe(methodDescriptionRef.current);
+    }
+
+    if (servicesDescriptionRef.current) {
+      observer.observe(servicesDescriptionRef.current);
+    }
+
     return () => {
       if (chiSiamoTextRef.current) {
         observer.unobserve(chiSiamoTextRef.current);
@@ -262,6 +276,14 @@ const Homepage = () => {
 
       if (pIvaTextRef.current) {
         observer.unobserve(pIvaTextRef.current);
+      }
+
+      if (methodDescriptionRef.current) {
+        observer.unobserve(methodDescriptionRef.current);
+      }
+
+      if (servicesDescriptionRef.current) {
+        observer.unobserve(servicesDescriptionRef.current);
       }
     };
   }, []);
@@ -286,6 +308,64 @@ const Homepage = () => {
     });
   };
 
+  // Funzioni per il carosello servizi
+  const nextService = () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setSlideDirection('left');
+    setCurrentServiceIndex((prevIndex) => 
+      prevIndex === services.length - 1 ? 0 : prevIndex + 1
+    );
+    setTimeout(() => setIsAnimating(false), 500);
+  };
+
+  const prevService = () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setSlideDirection('right');
+    setCurrentServiceIndex((prevIndex) => 
+      prevIndex === 0 ? services.length - 1 : prevIndex - 1
+    );
+    setTimeout(() => setIsAnimating(false), 500);
+  };
+
+  const goToService = (index) => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setSlideDirection(index > currentServiceIndex ? 'left' : 'right');
+    setCurrentServiceIndex(index);
+    setTimeout(() => setIsAnimating(false), 500);
+  };
+
+  // Array dei servizi
+  const services = [
+    {
+      id: 1,
+      title: "Consulenza fiscale e tributaria",
+      description: "L'ambito fiscale rappresenta spesso una delle principali preoccupazioni per le imprese. Affianchiamo l'imprenditore in ogni fase, garantendo una corretta pianificazione fiscale, la gestione di tutti gli adempimenti e l'ottimizzazione della posizione tributaria.\n\nOffriamo un'assistenza costante per ridurre i rischi, cogliere le opportunità normative e prevenire situazioni critiche.\n\nNonostante il massimo impegno, considerando la complessità e l'incoerenza del sistema tributario, quando sorgono controversie con l'amministrazione finanziaria, è importante avere al proprio fianco un professionista competente e determinato.\n\nOffriamo assistenza completa nel contenzioso tributario, dalla fase di accertamento a quella di difesa, con l'obiettivo di tutelare al massimo gli interessi del cliente.\n\nOperiamo con competenza tecnica e strategica, riducendo i rischi e cercando sempre soluzioni efficaci."
+    },
+    {
+      id: 2,
+      title: "Consulenza societaria",
+      description: "Supporto nella scelta della forma giuridica più adatta non solo in ottica fiscale, ma soprattutto per una tutela patrimoniale dei soggetti coinvolti. Come professionisti non possiamo permettere che l'impegno di una vita vada in malora a causa di un'errata scelta d'impostazione societaria fatta a monte."
+    },
+    {
+      id: 3,
+      title: "Gestione del personale dipendente",
+      description: "Elaborazione paghe, adempimenti contributivi, consulenza contrattuale e non solo. Offriamo un supporto concreto nella gestione dei rapporti interni: interveniamo in caso di tensioni o conflitti tra azienda e personale, aiutando l'imprenditore a trovare soluzioni efficaci, equilibrate e rispettose dei diritti di tutte le parti coinvolte con l'obiettivo è costruire un ambiente di lavoro sereno e produttivo, prevenendo criticità che potrebbero trasformarsi in problemi più seri."
+    },
+    {
+      id: 4,
+      title: "Tenuta della contabilità",
+      description: "Organizzazione e gestione contabile ordinaria e semplificata, con sistemi digitali evoluti. La corretta tenuta della contabilità non è solo un adempimento obbligatorio, ma lo strumento base che consente di monitorare l'andamento aziendale. Non ci limitiamo a \"tenere i conti\": forniamo report e analisi per aiutare l'imprenditore a capire davvero l'andamento della propria attività."
+    },
+    {
+      id: 5,
+      title: "Analisi finanziaria e studi di fattibilità",
+      description: "Ogni decisione strategica richiede una base numerica solida.\n\nAttraverso strumenti di analisi finanziaria avanzati, offriamo ai nostri clienti una fotografia chiara e dettagliata della situazione economica e patrimoniale dell'impresa.\n\nPrevediamo scenari, valutiamo investimenti e individuiamo punti di forza e debolezza, per sostenere decisioni consapevoli e lungimiranti.\n\nPrima di avviare un nuovo progetto o investimento, è fondamentale valutare rischi e opportunità.\n\nRealizziamo studi di fattibilità completi e personalizzati, fornendo dati concreti e scenari realistici.\n\nAiutiamo così l'imprenditore a pianificare le proprie strategie con lucidità, evitando errori costosi e massimizzando le possibilità di successo."
+    }
+  ];
+
   return (
     <div className="homepage-container" id="hero-container">
       <div className="navbar">
@@ -304,6 +384,7 @@ const Homepage = () => {
           <div className="navbar-links">
             <p onClick={() => scrollTo('hero-container')}>Home</p>
             <p onClick={() => scrollTo('chi-siamo-container')}>Chi Siamo</p>
+            <p onClick={() => scrollTo('services-section')}>I nostri servizi</p>
             <p onClick={() => scrollTo('lo-studio-container')}>Lo Studio</p>
             <p onClick={() => scrollTo('p-iva-container')}>P.IVA</p>
             <p onClick={() => scrollTo('contatti-container')}>Contatti</p>
@@ -391,26 +472,27 @@ const Homepage = () => {
 
       <div className="chi-siamo-container" id="chi-siamo-container">
         <div className="chi-siamo-content">
-          <p className="chi-siamo-title">Chi Siamo</p>
+          <h2 className="chi-siamo-title">Chi Siamo</h2>
           <p className="chi-siamo-text" ref={chiSiamoTextRef}>
-            Lo Studio Malacarne nasce dalla passione e dall'esperienza di due fratelli, uniti dalla stessa visione: offrire consulenza professionale su misura per aziende e professionisti.<br />
-
-            Con sedi a Castelfranco e Ponsacco, il nostro studio combina competenze specialistiche in settori diversi per garantire un servizio completo e personalizzato.<br />
-
-            La sede di Castelfranco si occupa principalmente di [settore di specializzazione].<br />
-            La sede di Ponsacco è specializzata in [altro settore di specializzazione].<br />
-
-            Grazie alla nostra sinergia e a un approccio innovativo, affianchiamo i nostri clienti nella gestione fiscale, contabile e strategica, aiutandoli a raggiungere i loro obiettivi con sicurezza e serenità.<br />
-
-            Contattaci per scoprire come possiamo supportare il tuo business!</p>
+            Siamo due fratelli, dottori commercialisti uniti da una visione comune: rendere la gestione d'impresa semplice e senza perdite di tempo.
+            <br /><br />
+            Operiamo in un contesto dove gestire un'attività oggi significa affrontare quotidianamente sfide quasi impossibili: burocrazia, scadenze, norme in continua evoluzione e decisioni da prendere in tempi rapidi.
+            <br /><br />
+            Il nostro obiettivo è liberare l'imprenditore dal peso degli adempimenti, permettendogli di pensare esclusivamente a come far crescere la propria impresa.
+            <br /><br />
+            Ci occupiamo di ogni aspetto fiscale, contabile e amministrativo, offrendo strumenti moderni e supporto costante. Vogliamo che ogni imprenditore possa dedicare tempo ed energie al proprio lavoro, senza preoccuparsi della burocrazia.
+            <br /><br />
+            <strong style={{color: '#248193'}}>La nostra filosofia?</strong><br />
+            Trasformare la complessità amministrativa e fiscale in un processo semplice, efficiente e trasparente!
+          </p>
         </div>
         <div className="chi-siamo-image">
           <div className="team-member">
             <div className="image-container">
               <img src={teamMember1} alt="Team member 1" />
             </div>
-            <h3>Nome Cognome</h3>
-            <p>Breve descrizione del ruolo e delle competenze della persona</p>
+            <h3>Dott. Marco Malacarne</h3>
+            <p>Laureato in Economia e Commercio presso l'università di Pisa, specializzato in consulenza aziendale, analisi finanziaria e gestione del personale</p>
             <div className="social-icons">
               <FontAwesomeIcon icon={faLinkedin} />
               <FontAwesomeIcon icon={faFacebookF} />
@@ -421,8 +503,8 @@ const Homepage = () => {
             <div className="image-container">
               <img src={teamMember2} alt="Team member 2" />
             </div>
-            <h3>Nome Cognome</h3>
-            <p>Breve descrizione del ruolo e delle competenze della persona</p>
+            <h3>Dott. Simone Malacarne</h3>
+            <p>Laureato in Economia e Commercio presso l'università di Pisa, specializzato in consulenza societaria, operazioni straordinarie e revisione legale</p>
             <div className="social-icons">
               <FontAwesomeIcon icon={faLinkedin} />
               <FontAwesomeIcon icon={faFacebookF} />
@@ -431,10 +513,105 @@ const Homepage = () => {
           </div>
         </div>
       </div>
+      
+      {/* Sezione metodo di lavoro */}
+      <div className="method-section">
+        <div className="method-content">
+          <h2 className="method-title">Il nostro metodo di lavoro</h2>
+          <div className="method-description" ref={methodDescriptionRef}>
+            <p>
+              Crediamo in un approccio moderno e tecnologico, ma radicato in valori solidi: professionalità, disponibilità e attenzione alle persone.
+              <br /><br />
+              Non solo numeri e adempimenti, ma relazioni di fiducia e strategie concrete per accompagnare la crescita delle imprese.
+              <br /><br />
+              Tecnologia, disponibilità e competenza sono gli strumenti con cui costruiamo ogni giorno relazioni di fiducia con i nostri clienti.
+            </p>
+          </div>
+          
+          <div className="method-cards">
+            <div className="method-card">
+              <div className="method-card-icon">
+                <FontAwesomeIcon icon={faHeadphones} />
+              </div>
+              <h3>Ascolto</h3>
+              <p>Partiamo sempre dalle esigenze specifiche di ogni cliente.</p>
+            </div>
+            
+            <div className="method-card">
+              <div className="method-card-icon">
+                <FontAwesomeIcon icon={faChartLine} />
+              </div>
+              <h3>Pianificazione</h3>
+              <p>Costruiamo strategie fiscali e amministrative personalizzate.</p>
+            </div>
+            
+            <div className="method-card">
+              <div className="method-card-icon">
+                <FontAwesomeIcon icon={faRobot} />
+              </div>
+              <h3>Automazione</h3>
+              <p>Utilizziamo strumenti digitali per ridurre tempi e margini d'errore.</p>
+            </div>
+            
+            <div className="method-card">
+              <div className="method-card-icon">
+                <FontAwesomeIcon icon={faHandsHelping} />
+              </div>
+              <h3>Supporto costante</h3>
+              <p>Siamo sempre disponibili, non solo a scadenze.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Sezione I nostri servizi */}
+      <div className="services-section" id="services-section" ref={servicesSectionRef}>
+        <div className="services-content">
+          <h2 className="services-title">I nostri servizi</h2>
+          <div className="services-description" ref={servicesDescriptionRef}>
+            <p>
+              Offriamo un'ampia gamma di servizi professionali per supportare le aziende in ogni aspetto della loro attività. 
+              La nostra esperienza e competenza ci permettono di fornire soluzioni personalizzate che rispondono alle esigenze specifiche di ogni cliente.
+            </p>
+          </div>
+          
+          <div className="simple-carousel">
+            <button className="carousel-arrow carousel-arrow-left" onClick={prevService}>
+              <FontAwesomeIcon icon={faChevronLeft} />
+            </button>
+            
+            <div className="carousel-wrapper">
+              <div 
+                key={currentServiceIndex}
+                className={`carousel-slide slide-${slideDirection}`}
+              >
+                <div className="service-card">
+                  <h3 className="service-title">{services[currentServiceIndex].title}</h3>
+                  <p className="service-description">{services[currentServiceIndex].description}</p>
+                </div>
+              </div>
+            </div>
+            
+            <button className="carousel-arrow carousel-arrow-right" onClick={nextService}>
+              <FontAwesomeIcon icon={faChevronRight} />
+            </button>
+          </div>
+          
+          <div className="carousel-indicators">
+            {services.map((_, index) => (
+              <button
+                key={index}
+                className={`indicator ${index === currentServiceIndex ? 'active' : ''}`}
+                onClick={() => goToService(index)}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
 
         <div className="lo-studio-container" id="lo-studio-container">
           <div className="lo-studio-content">
-            <p className="lo-studio-title">Lo Studio</p>
+            <h2 className="lo-studio-title">Lo Studio</h2>
             <p className="lo-studio-text" ref={loStudioTextRef}>
               Il nostro studio professionale si articola in due sedi strategicamente posizionate per servire al meglio la nostra clientela. La sede storica di Castelfranco, specializzata nella consulenza fiscale e tributaria per le piccole e medie imprese, e la sede di Ponsacco, focalizzata sulla gestione contabile e sulla consulenza del lavoro. Questa duplice presenza ci permette di offrire un servizio completo e specializzato, combinando l'expertise di entrambe le sedi per garantire soluzioni personalizzate per ogni cliente.
             </p>
@@ -481,13 +658,15 @@ const Homepage = () => {
         </div>
 
         <div className="p-iva-container" id="p-iva-container">
-          <p className="p-iva-title">Cosa è la P.IVA?</p>
-          <p className="p-iva-text" ref={pIvaTextRef}>
-            La Partita IVA è un codice identificativo fondamentale per le attività commerciali e professionali in Italia. 
-            Questo numero univoco di 11 cifre viene utilizzato per identificare in modo inequivocabile un'azienda o un professionista 
-            nei rapporti con l'amministrazione finanziaria. È essenziale per la fatturazione, la dichiarazione dei redditi 
-            e per tutti gli adempimenti fiscali previsti dalla legge italiana.
-          </p>
+          <div className="p-iva-content">
+            <h2 className="p-iva-title">Cosa è la P.IVA?</h2>
+            <p className="p-iva-text" ref={pIvaTextRef}>
+              La Partita IVA è un codice identificativo fondamentale per le attività commerciali e professionali in Italia. 
+              Questo numero univoco di 11 cifre viene utilizzato per identificare in modo inequivocabile un'azienda o un professionista 
+              nei rapporti con l'amministrazione finanziaria. È essenziale per la fatturazione, la dichiarazione dei redditi 
+              e per tutti gli adempimenti fiscali previsti dalla legge italiana.
+            </p>
+          </div>
           <a 
             href="/piva" 
             target="_blank" 
@@ -566,7 +745,7 @@ const Homepage = () => {
 
         <div className="footer-bottom">
           <p>© 2025 Studio Malacarne. Tutti i diritti riservati. | P.IVA 01234567890</p>
-          <p>Powered by <a href="https://www.hi-dev.it" target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none', color: 'white'}}>HiDev</a></p>
+          <p>Powered by <a href="https://www.webbitz.it" target="_blank" rel="noopener noreferrer" style={{textDecoration: 'none', color: 'white'}}>Webbitz</a></p>
         </div>
       </footer>
     </div>
