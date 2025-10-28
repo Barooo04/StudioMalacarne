@@ -58,6 +58,23 @@
     padding: 0 40px;
 }
 
+@media (max-width: 768px) {
+  /* Top Contact Bar - Centrato perfetto */
+  .top-contact-bar {
+    padding: 10px 16px !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    display: flex !important;
+  }
+  
+  .contact-location {
+    padding: 0 !important;
+    margin: 0 !important;
+    flex: 0 0 auto !important;
+    white-space: nowrap !important;
+  }
+}
+
 
 .navbar-nav {
     display: flex;
@@ -131,6 +148,128 @@
 .navbar-button:hover {
     background-color: #ddd;
     transition: all 0.3s ease;
+}
+
+/* Mobile Menu Toggle */
+.mobile-menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.8rem;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 1001;
+    position: absolute;
+    right: 16px;
+}
+
+.mobile-menu-toggle:hover {
+    transform: none;
+}
+
+.mobile-menu-toggle:focus {
+    outline: none;
+}
+
+/* Mobile Menu Container */
+.mobile-menu-overlay {
+    display: none;
+}
+
+.mobile-menu-overlay.active {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    animation: fadeIn 0.3s ease;
+    overflow-y: auto;
+}
+
+.mobile-menu-overlay.active .navbar-links {
+    display: flex !important;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Mobile Menu Links */
+.mobile-menu-overlay .navbar-links {
+    display: flex !important;
+    position: relative;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    max-width: 520px;
+    margin: 0 auto;
+    margin-top: 70px; /* push below navbar */
+    padding: 24px 16px 40px 16px;
+    background: white;
+    border-radius: 16px;
+}
+
+.mobile-menu-overlay .navbar-links p {
+    margin: 0;
+    font-size: 1.2rem;
+    text-align: left;
+    padding: 14px 18px;
+    color: #248193;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(36,129,147,0.15);
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    background-color: #f8fbfc;
+}
+
+.mobile-menu-overlay .navbar-links p::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(36,129,147,0.08), transparent);
+    transition: left 0.5s ease;
+}
+
+.mobile-menu-overlay .navbar-links p:hover::before {
+    left: 100%;
+}
+
+.mobile-menu-overlay .navbar-links p:hover {
+    background-color: #eef6f8;
+}
+
+/* First and last items */
+.mobile-menu-overlay .mobile-whatsapp-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 14px 18px;
+    background: linear-gradient(135deg, #25D366, #1eb85a);
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.mobile-menu-overlay .mobile-whatsapp-btn:hover {
+    filter: brightness(1.05);
 }
 
 .hero-container {
@@ -291,7 +430,7 @@
         linear-gradient(90deg, rgba(12, 0, 79, 0.03) 1px, transparent 1px),
         linear-gradient(0deg, rgba(12, 0, 79, 0.03) 1px, transparent 1px);
     background-size: 20px 20px;
-    overflow-y: auto;
+    overflow-y: hidden; /* remove inner scrollbar; page scrolls instead */
 }
 
 .message {
@@ -497,6 +636,8 @@
     margin-top: 40px;
     width: 100%;
     overflow: visible;
+    padding: 0 20px;
+    box-sizing: border-box;
 }
 
 .team-member {
@@ -682,6 +823,20 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+
+/* Desktop layout */
+.studio-content-castelfranco {
+    margin-left: 20px;
+}
+
+.studio-content-ponsacco {
+    margin-right: 20px;
+    text-align: right;
+}
+
+.studio-content-ponsacco .studio-phone {
+    margin-left: auto;
 }
 
 .studio-title {
@@ -1086,6 +1241,8 @@
   margin-top: 50px;
   padding: 20px;
   background-color: transparent;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .method-card {
@@ -1202,10 +1359,11 @@
 }
 
 .services-content {
-  width: 90%;
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 40px;
+  box-sizing: border-box;
 }
 
 .services-title {
@@ -1246,6 +1404,9 @@
   justify-content: center;
   gap: 30px;
   margin: 50px 0;
+  padding: 0 40px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .carousel-wrapper {
@@ -1297,10 +1458,11 @@
   text-align: center;
   transition: all 0.3s ease;
   width: 700px;
-  height: 300px;
+  min-height: 300px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  overflow: visible;
 }
 
 .service-card:hover {
@@ -1379,5 +1541,437 @@
 .indicator:hover {
   background-color: #2a92a4;
   transform: scale(1.1);
+}
+
+/* Media query per responsività generale */
+@media (max-width: 1200px) {
+  .services-content {
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Navbar Mobile - Ricostruito da zero */
+  .navbar {
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  
+  .top-contact-bar {
+    font-size: 0.8rem !important;
+    padding: 10px 16px !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+    gap: 0px !important;
+  }
+  
+  .navbar-nav {
+    position: relative !important;
+    min-height: 56px !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+  }
+  
+  .navbar-links {
+    display: none !important;
+  }
+  
+  .mobile-menu-toggle {
+    display: flex !important;
+    position: absolute !important;
+    right: 16px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+  }
+  
+  .navbar-logo {
+    position: absolute !important;
+    left: 16px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    height: 45px !important;
+  }
+  
+  .navbar-button {
+    position: static;
+    display: none !important; /* hide on mobile */
+  }
+  
+  .navbar-logo img {
+    height: 35px !important;
+  }
+  
+  .navbar-button-text {
+    display: none !important;
+  }
+  
+  /* Hero section - Mobile Vertical Layout */
+  .hero-container {
+    width: 95% !important;
+    margin-left: 0 auto !important;
+    height: auto !important;
+    flex-direction: column !important;
+    padding: 20px 16px !important; /* padding laterale uguale a navbar */
+    justify-content: flex-start !important;
+    align-items: stretch !important;
+    background-image: none !important;
+    border-radius: 10px !important;
+    padding: 5px !important;
+  }
+  
+  .hero-content {
+    width: 100% !important;
+    padding: 0 !important;
+    order: 1 !important;
+    margin-bottom: 24px !important;
+    text-align: center !important;
+  }
+
+  .title {
+    font-size: 2rem !important;
+  }
+
+  .subtitle {
+    font-size: 1rem !important;
+  }
+
+  .description {
+    font-size: 1rem !important;
+  }
+  
+  .chat-background {
+    display: none !important;
+  }
+  
+  .hero-chat {
+    width: 100% !important;
+    margin-right: 0 !important;
+    margin-bottom: 0 !important;
+    order: 2 !important;
+    box-shadow: none !important;
+  }
+  
+  .hero-text {
+    width: 100% !important;
+    margin-bottom: 20px !important;
+  }
+  
+  .hero-logo {
+    width: 60% !important;
+    max-width: 200px !important;
+    margin: 0 auto 20px !important;
+  }
+  
+  /* Chi Siamo */
+
+  .chi-siamo-title, .method-title, .services-title, .lo-studio-title,.p-iva-title {
+    margin: 0 0 20px 0 !important;
+  }
+
+  .chi-siamo-text, .method-description, .services-description p, .lo-studio-text p, .p-iva-text {
+    padding: 0 10px;
+    font-size: 1.2rem !important;
+  }
+  
+  .chi-siamo-image {
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .team-member {
+    max-width: 100%;
+  }
+  
+  /* Metodo di lavoro */
+  .method-cards {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .method-card {
+    padding: 30px 20px;
+  }
+
+  .method-card-icon  {
+    overflow: hidden !important;
+  }
+  
+  /* Servizi - Carosello Responsive */
+
+  
+  .simple-carousel {
+    padding: 0 !important;
+    gap: 0 !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+  }
+  
+  .carousel-arrow {
+    display: none !important; /* nasconde frecce */
+  }
+  
+  .carousel-wrapper {
+    width: 100% !important;
+    padding: 0 20px !important;
+  }
+  
+  .service-card {
+    max-width: 90% !important;
+    padding: 24px 20px !important;
+    margin: 0 auto !important;
+  }
+  
+  .service-title {
+    font-size: 1.6rem !important;
+  }
+  
+  .service-description {
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+  }
+  
+  .carousel-indicators {
+    margin-top: 20px !important;
+    padding: 0 20px !important;
+    display: flex !important;
+    justify-content: center !important;
+    gap: 8px !important;
+  }
+  
+  .indicator {
+    width: 10px !important;
+    height: 10px !important;
+  }
+  
+  /* Lo Studio - Layout Verticale */
+  .lo-studio-castelfranco, .lo-studio-ponsacco {
+    flex-direction: column !important;
+    width: 80% !important;
+    padding: 20px !important;
+    margin: 20px auto !important;
+  }
+  
+  .lo-studio-ponsacco {
+    flex-direction: column !important; /* anche per Ponsacco */
+  }
+  
+  .studio-image {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 250px !important;
+    object-fit: cover !important;
+    margin-bottom: 15px !important;
+  }
+  
+  .studio-content {
+    width: 90% !important;
+    text-align: center !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  
+  /* Reset degli stili desktop su mobile */
+  .studio-content-castelfranco {
+    margin-left: 0 !important;
+  }
+  
+  .studio-content-ponsacco {
+    margin-right: 0 !important;
+    text-align: center !important;
+  }
+  
+  .studio-content-ponsacco .studio-phone {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  
+  .studio-title {
+    font-size: 1.8rem !important;
+    text-align: center !important;
+  }
+  
+  .studio-description {
+    font-size: 1rem !important;
+    text-align: center !important;
+  }
+
+  .lo-studio-text {
+    font-size: 1.2rem !important;
+    margin: 0 auto !important;
+  }
+
+  .studio-phone {
+    margin: 0 auto !important;
+  }
+  
+  /* P.IVA */
+  .p-iva-container {
+    width: 90% !important;
+  }
+  .p-iva-text {
+    padding: 0 10px;
+    font-size: 1rem;
+  }
+  
+  /* Footer Mobile - Layout 3 Righe */
+  .footer-container {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+    padding: 40px 20px !important;
+    width: 90% !important;
+  }
+  
+  .footer-section {
+    padding: 0 !important;
+  }
+  
+  /* Riga 1: Logo e Form */
+  .footer-section:first-child {
+    order: 1 !important;
+  }
+  
+  .footer-logo {
+    width: 150px !important;
+    margin-bottom: 20px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    display: block !important;
+  }
+  
+  .footer-contact-form {
+    order: 2 !important;
+  }
+  
+  /* Riga 2: Info Castelfranco e Ponsacco */
+  .footer-locations {
+    order: 3 !important;
+    flex-direction: column !important;
+    gap: 5px !important;
+  }
+  
+  .location {
+    margin-bottom: 0 !important;
+  }
+
+  .location-info p {
+    padding: 5px !important;
+    gap: 5px !important;
+    margin: 0 !important;
+  }
+  
+  /* Riga 3: Mappe */
+  .location-map {
+    width: 100% !important;
+    height: 150px !important;
+    margin-top: 10px !important;
+  }
+  
+  .footer-bottom {
+    margin-top: 20px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Navbar */
+  .mobile-menu-toggle {
+    font-size: 1.3rem;
+    right: 80px;
+  }
+  
+  .navbar-button {
+    right: 80px;
+    padding: 6px 10px;
+  }
+  
+  .navbar-logo {
+    height: 40px;
+  }
+  
+  /* Hero section */
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+  
+  /* Chi Siamo */
+  .chi-siamo-title {
+    font-size: 2rem;
+  }
+  
+  .chi-siamo-text {
+    font-size: 0.9rem;
+  }
+  
+  /* Metodo di lavoro */
+  .method-title {
+    font-size: 2rem;
+  }
+  
+  /* Servizi */
+  .services-content {
+    padding: 0 15px;
+  }
+  
+  .services-title {
+    font-size: 2rem;
+  }
+  
+  .services-description p {
+    font-size: 1rem;
+  }
+  
+  .simple-carousel {
+    padding: 0 15px;
+    gap: 10px;
+  }
+  
+  .service-card {
+    padding: 25px 15px;
+  }
+  
+  .service-title {
+    font-size: 1.5rem;
+  }
+  
+  .service-description {
+    font-size: 0.9rem;
+  }
+  
+  .carousel-arrow {
+    width: 35px;
+    height: 35px;
+    font-size: 0.9rem;
+  }
+  
+  /* Lo Studio */
+  .lo-studio-title {
+    font-size: 2rem;
+  }
+  
+  .lo-studio-text {
+    font-size: 0.9rem;
+  }
+  
+  /* P.IVA */
+  .p-iva-title {
+    font-size: 2rem;
+  }
+  
+  .p-iva-text {
+    font-size: 0.9rem;
+  }
+  
+  /* Footer */
+  .footer-title {
+    font-size: 1.5rem;
+  }
+  
+  .footer-contact-item {
+    font-size: 0.9rem;
+  }
 }
 

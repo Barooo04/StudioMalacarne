@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './Homepage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhone, faArrowRight, faArrowUp, faHeadphones, faChartLine, faRobot, faHandsHelping, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faPhone, faArrowRight, faArrowUp, faHeadphones, faChartLine, faRobot, faHandsHelping, faChevronLeft, faChevronRight, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faLinkedin, faFacebookF, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import ReactMarkdown from 'react-markdown';
 
@@ -31,6 +31,7 @@ const Homepage = () => {
   const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
   const [slideDirection, setSlideDirection] = useState('right'); // 'left' or 'right'
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const messagesEndRef = useRef(null);
 
   const API = "https://servermalacarne.onrender.com/api";
@@ -381,6 +382,13 @@ const Homepage = () => {
           <div className="navbar-logo" onClick={() => scrollTo('hero-container')}>
             <img src={logo} alt="Studio Malacarne Logo" />
           </div>
+          <button 
+            className="mobile-menu-toggle"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            <FontAwesomeIcon icon={isMobileMenuOpen ? faTimes : faBars} />
+          </button>
           <div className="navbar-links">
             <p onClick={() => scrollTo('hero-container')}>Home</p>
             <p onClick={() => scrollTo('chi-siamo-container')}>Chi Siamo</p>
@@ -395,6 +403,30 @@ const Homepage = () => {
           </div>
         </div>
       </div>
+
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div className="mobile-menu-overlay active" onClick={() => setIsMobileMenuOpen(false)}>
+          <div className="navbar-links mobile-menu-open" onClick={(e) => e.stopPropagation()}>
+            <p onClick={() => {scrollTo('hero-container'); setIsMobileMenuOpen(false);}}>Home</p>
+            <p onClick={() => {scrollTo('chi-siamo-container'); setIsMobileMenuOpen(false);}}>Chi Siamo</p>
+            <p onClick={() => {scrollTo('services-section'); setIsMobileMenuOpen(false);}}>I nostri servizi</p>
+            <p onClick={() => {scrollTo('lo-studio-container'); setIsMobileMenuOpen(false);}}>Lo Studio</p>
+            <p onClick={() => {scrollTo('p-iva-container'); setIsMobileMenuOpen(false);}}>P.IVA</p>
+            <p onClick={() => {scrollTo('contatti-container'); setIsMobileMenuOpen(false);}}>Contatti</p>
+            <a
+              className="mobile-whatsapp-btn"
+              href="https://wa.me/393331234567"
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <FontAwesomeIcon icon={faWhatsapp} />
+              <span>Scrivici su WhatsApp</span>
+            </a>
+          </div>
+        </div>
+      )}
 
       <div className="hero-container">
         <div className={`hero-content ${isChatActive ? 'chat-active' : ''}`}>
@@ -622,7 +654,7 @@ const Homepage = () => {
               alt="Studio Castelfranco" 
               className="studio-image"
             />
-            <div className="studio-content" style={{marginLeft: '20px'}}>
+            <div className="studio-content studio-content-castelfranco">
               <h2 className="studio-title">Castelfranco</h2>
               <p className="studio-description">
                 La nostra sede storica di Castelfranco è specializzata nella consulenza fiscale 
@@ -642,14 +674,14 @@ const Homepage = () => {
               alt="Studio Ponsacco" 
               className="studio-image"
             />
-            <div className="studio-content" style={{marginRight: '20px', textAlign: 'right'}}>
+            <div className="studio-content studio-content-ponsacco">
               <h2 className="studio-title">Ponsacco</h2>
               <p className="studio-description">
                 La sede di Ponsacco è il nostro centro specializzato nella gestione contabile 
                 e nella consulenza del lavoro. Il nostro team di esperti è pronto ad assistere 
                 professionisti e aziende con servizi mirati e consulenza specialistica.
               </p>
-              <a href="tel:+390587000000" className="studio-phone" style={{marginLeft: 'auto'}}>
+              <a href="tel:+390587000000" className="studio-phone">
                 <FontAwesomeIcon icon={faPhone} />
                 +39 0587 000000
               </a>
