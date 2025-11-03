@@ -1546,6 +1546,83 @@
   transform: scale(1.1);
 }
 
+/* Nuova fascia tablet: applica le regole "mobile" fino a 1050px */
+@media (max-width: 1050px) {
+  /* Navbar: usa hamburger */
+  .navbar {
+    padding: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .top-contact-bar {
+    font-size: 0.85rem !important;
+    padding: 10px 16px !important;
+  }
+  .navbar-nav {
+    position: relative !important;
+    min-height: 56px !important;
+    justify-content: space-around !important;
+    align-items: center !important;
+  }
+  .navbar-links {
+    display: none !important;
+  }
+  .mobile-menu-toggle {
+    display: flex !important;
+    position: absolute !important;
+    right: 16px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+  }
+  .navbar-logo {
+    position: absolute !important;
+    left: 16px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    height: 45px !important;
+  }
+  .navbar-button { /* evita overflow della CTA */
+    display: none !important;
+  }
+
+  /* Evita qualsiasi scroll orizzontale sugli elementi principali */
+  .homepage-container,
+  .services-content,
+  .simple-carousel,
+  .service-card,
+  .hero-container {
+    overflow-x: hidden !important;
+  }
+
+  /* Carosello servizi: frecce nascoste e card più compatte */
+  .simple-carousel {
+    padding: 0 10px !important;
+    gap: 10px !important;
+  }
+  .carousel-arrow {
+    display: none !important;
+  }
+  .carousel-wrapper {
+    width: 100% !important;
+  }
+  .service-card {
+    width: 100% !important;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+  }
+
+  /* Lo Studio: immagini ridotte */
+  .lo-studio-castelfranco, .lo-studio-ponsacco {
+    width: 90% !important;
+    gap: 20px !important;
+  }
+  .studio-image {
+    width: 300px !important;
+    height: 300px !important;
+    object-fit: cover !important;
+  }
+}
+
 /* Media query per responsività generale */
 @media (max-width: 1200px) {
   .services-content {

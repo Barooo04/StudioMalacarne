@@ -10,6 +10,8 @@ import teamMember2 from '../Images/SM-nosfondo.png';
 //import logo from '../Images/sm-reverse.png';
 import logo from '../Images/logoM2.png';
 import logo3 from '../Images/logoM1.png';
+import studioPonsacco from '../Images/studioPonsacco.png';
+import studioCastelfranco from '../Images/studioCastelfranco.png';
 
 const Homepage = () => {
   const chatInputRef = useRef(null);
@@ -372,10 +374,10 @@ const Homepage = () => {
       <div className="navbar">
         <div className="top-contact-bar">
           <div className="contact-location">
-            Castelfranco: <span>0571 489516</span>
+            Castelfranco: <span>0571 489029</span>
           </div>
           <div className="contact-location">
-            Ponsacco: <span>0587 731777</span>
+            Ponsacco: <span>0587 732559</span>
           </div>
         </div>
         <div className='navbar-nav'>
@@ -650,7 +652,7 @@ const Homepage = () => {
           </div>
           <div className="lo-studio-castelfranco">
             <img 
-              src="/studio-castelfranco.jpg" 
+              src={studioCastelfranco} 
               alt="Studio Castelfranco" 
               className="studio-image"
             />
@@ -661,16 +663,16 @@ const Homepage = () => {
                 e tributaria per le piccole e medie imprese. Con anni di esperienza nel settore, 
                 offriamo soluzioni personalizzate per ogni esigenza aziendale.
               </p>
-              <a href="tel:+390571000000" className="studio-phone">
+              <a href="tel:+390571489029" className="studio-phone">
                 <FontAwesomeIcon icon={faPhone} />
-                +39 0571 000000
+                +39 0571 489029
               </a>
             </div>
           </div>
 
           <div className="lo-studio-ponsacco">
             <img 
-              src="/studio-ponsacco.jpg" 
+              src={studioPonsacco} 
               alt="Studio Ponsacco" 
               className="studio-image"
             />
@@ -681,9 +683,9 @@ const Homepage = () => {
                 e nella consulenza del lavoro. Il nostro team di esperti è pronto ad assistere 
                 professionisti e aziende con servizi mirati e consulenza specialistica.
               </p>
-              <a href="tel:+390587000000" className="studio-phone">
+              <a href="tel:+390587732559" className="studio-phone">
                 <FontAwesomeIcon icon={faPhone} />
-                +39 0587 000000
+                +39 0587 732559
               </a>
             </div>
           </div>
@@ -744,12 +746,13 @@ const Homepage = () => {
             <div className="location">
               <h3 className="location-title">Castelfranco</h3>
               <div className="location-info">
-                <p>Via Example, 123 - Castelfranco</p>
-                <p>Tel: +39 0571 000000</p>
+                <p>Castelfranco di Sotto (PI)</p>
+                <p>Tel: +39 0571 489029</p>
+                <p>Email: <a href="mailto:cf@studiomalacarne.com" style={{color: 'inherit'}}>cf@studiomalacarne.com</a></p>
                 <p>Lun-Ven: 9:00-18:00</p>
               </div>
               <iframe 
-                src="https://www.google.com/maps/embed?pb=..." 
+                src="https://www.google.com/maps?q=Castelfranco%20di%20Sotto%2C%20Pisa&output=embed" 
                 className="location-map" 
                 title="Sede Castelfranco"
                 loading="lazy"
@@ -761,12 +764,13 @@ const Homepage = () => {
             <div className="location">
               <h3 className="location-title">Ponsacco</h3>
               <div className="location-info">
-                <p>Via Sample, 456 - Ponsacco</p>
-                <p>Tel: +39 0587 000000</p>
+                <p>Ponsacco (PI)</p>
+                <p>Tel: +39 0587 732559</p>
+                <p>Email: <a href="mailto:ponsacco@studiomalacarne.com" style={{color: 'inherit'}}>ponsacco@studiomalacarne.com</a></p>
                 <p>Lun-Ven: 9:00-18:00</p>
               </div>
               <iframe 
-                src="https://www.google.com/maps/embed?pb=..." 
+                src="https://www.google.com/maps?q=Ponsacco%2C%20Pisa&output=embed" 
                 className="location-map" 
                 title="Sede Ponsacco"
                 loading="lazy"
