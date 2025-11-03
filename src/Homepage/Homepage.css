@@ -1092,12 +1092,23 @@
 
 .values-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(4, 1fr); /* 4 colonne su desktop (sopra 1255px) */
   gap: 30px;
   width: 90%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+}
+
+/* Forza 2 colonne fino a 1255px per evitare layout 3+1 */
+@media (max-width: 1255px) {
+  .values-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  /* Metodo di lavoro: 2 colonne fino a 1255px, evita layout 3+1 */
+  .method-cards {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
 }
 
 .value-card {
@@ -1242,7 +1253,7 @@
 
 .method-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(4, 1fr); /* 4 colonne su desktop */
   gap: 30px;
   margin-top: 50px;
   padding: 20px;
@@ -1552,6 +1563,10 @@
 
 /* Nuova fascia tablet: applica le regole "mobile" fino a 1050px */
 @media (max-width: 1050px) {
+  /* Valori/Principi: 2 colonne fino a 1050px, mai 3 */
+  .values-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
   /* Navbar: usa hamburger */
   .navbar {
     padding: 0 !important;
