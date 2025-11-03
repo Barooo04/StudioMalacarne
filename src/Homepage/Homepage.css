@@ -6,6 +6,10 @@
     font-style: normal;
 }
 
+.carousel-indicators {
+  overflow-y: hidden;
+}
+
 .homepage-container {
     display: flex;
     flex-direction: column;
@@ -1606,10 +1610,16 @@
     width: 100% !important;
   }
   .service-card {
-    width: 100% !important;
+    width: 90% !important;
     max-width: 900px !important;
     margin: 0 auto !important;
+    padding: 30px 25px !important;
   }
+  .services-content { padding: 0 16px !important; }
+  .services-title { font-size: 2.2rem !important; margin-bottom: 30px !important; }
+  .service-title { font-size: 2rem !important; }
+  .service-description { font-size: 1rem !important; line-height: 1.5 !important; }
+  .carousel-indicators { margin-top: 20px !important; }
 
   /* Lo Studio: immagini ridotte */
   .lo-studio-castelfranco, .lo-studio-ponsacco {
