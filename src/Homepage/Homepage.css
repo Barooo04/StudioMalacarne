@@ -1122,11 +1122,13 @@
   justify-content: center;
   margin: 0 auto 20px;
   transition: all 0.3s ease;
+  overflow: hidden; /* evita qualsiasi scrollbar/overflow visibile nel cerchio */
 }
 
 .value-icon svg {
   font-size: 2rem;
   color: white;
+  display: block; /* elimina spazi/line-height che possono far "uscire" l'SVG */
 }
 
 .value-card:hover .value-icon {
@@ -1290,7 +1292,7 @@
   margin: 0 auto 25px;
   transition: all 0.3s ease;
   position: relative;
-  
+  overflow: hidden; /* elimina la comparsa della barra di scorrimento su alcuni desktop */
 }
 
 .method-card-icon::before {
@@ -1315,6 +1317,7 @@
   font-size: 2rem;
   color: white;
   transition: transform 0.3s ease;
+  display: block; /* assicura centratura precisa dell'icona dentro il cerchio */
 }
 
 .method-card:hover .method-card-icon {
@@ -1453,10 +1456,10 @@
   background-color: white;
   padding: 50px 40px;
   border-radius: 15px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+  box-shadow: none; /* niente ombre fisse */
   border: 1px solid rgba(36, 129, 147, 0.1);
   text-align: center;
-  transition: all 0.3s ease;
+  transition: none; /* nessuna animazione */
   width: 700px;
   min-height: 300px;
   display: flex;
@@ -1466,9 +1469,9 @@
 }
 
 .service-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-  border-color: #248193;
+  transform: none; /* nessun movimento on hover */
+  box-shadow: none; /* nessuna ombra on hover */
+  border-color: rgba(36, 129, 147, 0.1); /* mantieni il bordo originale */
 }
 
 .service-title {
@@ -1691,10 +1694,37 @@
   
   .method-card {
     padding: 30px 20px;
+    box-shadow: none !important; /* rimuovi ombra su mobile */
+    transition: none !important;  /* rimuovi animazioni su mobile */
   }
 
   .method-card-icon  {
     overflow: hidden !important;
+  }
+  
+  /* Disabilita tutti gli effetti hover solo su mobile */
+  .method-card::before {
+    display: none !important;
+  }
+  .method-card:hover {
+    transform: none !important;
+    box-shadow: none !important;
+    border-color: rgba(36, 129, 147, 0.1) !important;
+  }
+  .method-card:hover .method-card-icon {
+    transform: none !important;
+  }
+  .method-card:hover .method-card-icon::before {
+    opacity: 0 !important;
+  }
+  .method-card:hover .method-card-icon svg {
+    transform: none !important;
+  }
+  .method-card:hover h3 {
+    color: #248193 !important;
+  }
+  .method-card:hover p {
+    color: #666 !important;
   }
   
   /* Servizi - Carosello Responsive */
