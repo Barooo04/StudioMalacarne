@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import './Homepage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPhone, faArrowRight, faArrowUp, faHeadphones, faChartLine, faRobot, faHandsHelping, faChevronLeft, faChevronRight, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { faLinkedin, faFacebookF, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import { faPhone, faArrowRight, faArrowUp, faBars, faTimes, faEnvelope, faMapMarkerAlt, faUserDoctor, faPills, faHammer, faPlane, faCar, faSmoking, faGlobe, faHouse, faHome, faFileInvoice } from '@fortawesome/free-solid-svg-icons';
+import { faWhatsapp, faBitcoin, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import ReactMarkdown from 'react-markdown';
 
 import teamMember1 from '../Images/MM-nosfondo.png';
@@ -19,7 +19,6 @@ const Homepage = () => {
   const servicesSectionRef = useRef(null);
   const loStudioTextRef = useRef(null);
   const pIvaTextRef = useRef(null);
-  const methodDescriptionRef = useRef(null);
   const servicesDescriptionRef = useRef(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [threadId, setThreadId] = useState(null);
@@ -30,9 +29,6 @@ const Homepage = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [isChatActive, setIsChatActive] = useState(false);
   const [showQuickQuestions, setShowQuickQuestions] = useState(true);
-  const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
-  const [slideDirection, setSlideDirection] = useState('right'); // 'left' or 'right'
-  const [isAnimating, setIsAnimating] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const messagesEndRef = useRef(null);
 
@@ -260,10 +256,6 @@ const Homepage = () => {
       observer.observe(pIvaTextRef.current);
     }
 
-    if (methodDescriptionRef.current) {
-      observer.observe(methodDescriptionRef.current);
-    }
-
     if (servicesDescriptionRef.current) {
       observer.observe(servicesDescriptionRef.current);
     }
@@ -279,10 +271,6 @@ const Homepage = () => {
 
       if (pIvaTextRef.current) {
         observer.unobserve(pIvaTextRef.current);
-      }
-
-      if (methodDescriptionRef.current) {
-        observer.unobserve(methodDescriptionRef.current);
       }
 
       if (servicesDescriptionRef.current) {
@@ -311,75 +299,43 @@ const Homepage = () => {
     });
   };
 
-  // Funzioni per il carosello servizi
-  const nextService = () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    setSlideDirection('left');
-    setCurrentServiceIndex((prevIndex) => 
-      prevIndex === services.length - 1 ? 0 : prevIndex + 1
-    );
-    setTimeout(() => setIsAnimating(false), 500);
-  };
-
-  const prevService = () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    setSlideDirection('right');
-    setCurrentServiceIndex((prevIndex) => 
-      prevIndex === 0 ? services.length - 1 : prevIndex - 1
-    );
-    setTimeout(() => setIsAnimating(false), 500);
-  };
-
-  const goToService = (index) => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    setSlideDirection(index > currentServiceIndex ? 'left' : 'right');
-    setCurrentServiceIndex(index);
-    setTimeout(() => setIsAnimating(false), 500);
-  };
-
-  // Array dei servizi
+  // Array dei servizi (ordinati per lunghezza descrizione, dalle più lunghe alle più corte)
   const services = [
     {
       id: 1,
-      title: "Consulenza fiscale e tributaria",
-      description: "L'ambito fiscale rappresenta spesso una delle principali preoccupazioni per le imprese. Affianchiamo l'imprenditore in ogni fase, garantendo una corretta pianificazione fiscale, la gestione di tutti gli adempimenti e l'ottimizzazione della posizione tributaria.\n\nOffriamo un'assistenza costante per ridurre i rischi, cogliere le opportunità normative e prevenire situazioni critiche.\n\nNonostante il massimo impegno, considerando la complessità e l'incoerenza del sistema tributario, quando sorgono controversie con l'amministrazione finanziaria, è importante avere al proprio fianco un professionista competente e determinato.\n\nOffriamo assistenza completa nel contenzioso tributario, dalla fase di accertamento a quella di difesa, con l'obiettivo di tutelare al massimo gli interessi del cliente.\n\nOperiamo con competenza tecnica e strategica, riducendo i rischi e cercando sempre soluzioni efficaci."
+      title: "Consulenza fiscale e societaria",
+      description: "Un affiancamento per l'imprenditore per garantire una corretta pianificazione fiscale, la gestione di tutti gli adempimenti e l'ottimizzazione della posizione tributaria. Assistenza costante per ridurre i rischi, cogliere le opportunità normative e prevenire situazioni critiche.\n\nL'ambito fiscale rappresenta spesso una delle principali preoccupazioni per le imprese. Nonostante il massimo impegno, considerando la complessità e l'incoerenza del sistema tributario, quando sorgono controversie con l'amministrazione finanziaria, è importante avere al proprio fianco un professionista competente e determinato. Offriamo assistenza completa nel contenzioso tributario, dalla fase di accertamento a quella di difesa, con l'obiettivo di tutelare al massimo gli interessi del cliente. Operiamo con competenza tecnica e strategica, riducendo i rischi e cercando sempre soluzioni efficaci.\n\nSupporto nella scelta della forma giuridica più adatta non solo in ottica fiscale, ma soprattutto per una tutela patrimoniale dei soggetti coinvolti. Come professionisti non possiamo permettere che l'impegno di una vita vada in malora a causa di un'errata scelta d'impostazione societaria fatta a monte."
     },
     {
       id: 2,
-      title: "Consulenza societaria",
-      description: "Supporto nella scelta della forma giuridica più adatta non solo in ottica fiscale, ma soprattutto per una tutela patrimoniale dei soggetti coinvolti. Come professionisti non possiamo permettere che l'impegno di una vita vada in malora a causa di un'errata scelta d'impostazione societaria fatta a monte."
+      title: "Analisi finanziaria e business plan",
+      description: "Una fotografia chiara e dettagliata della situazione economica e patrimoniale dell'impresa attraverso strumenti di analisi finanziaria avanzati, base numerica solida per ogni decisione strategica dell'imprenditore.\n\nPrevisione di scenari, valutazione di investimenti ed individuazione di punti di forza e debolezza, rischi ed opportunità per sostenere decisioni consapevoli e lungimiranti prima di avviare un nuovo progetto o investimento. Studi di fattibilità completi e personalizzati, fornendo dati concreti e scenari realistici per aiutare l'imprenditore a pianificare le proprie strategie con lucidità, evitando errori costosi e massimizzando le possibilità di successo."
     },
     {
       id: 3,
       title: "Gestione del personale dipendente",
-      description: "Elaborazione paghe, adempimenti contributivi, consulenza contrattuale e non solo. Offriamo un supporto concreto nella gestione dei rapporti interni: interveniamo in caso di tensioni o conflitti tra azienda e personale, aiutando l'imprenditore a trovare soluzioni efficaci, equilibrate e rispettose dei diritti di tutte le parti coinvolte con l'obiettivo è costruire un ambiente di lavoro sereno e produttivo, prevenendo criticità che potrebbero trasformarsi in problemi più seri."
+      description: "Elaborazione paghe, adempimenti contributivi, consulenza contrattuale e non solo. Un supporto concreto nella gestione dei rapporti interni: interveniamo in caso di tensioni o conflitti tra azienda e personale, aiutando l'imprenditore a trovare soluzioni efficaci, equilibrate e rispettose dei diritti di tutte le parti coinvolte con l'obiettivo è costruire un ambiente di lavoro sereno e produttivo, prevenendo criticità che potrebbero trasformarsi in problemi più seri."
     },
     {
       id: 4,
       title: "Tenuta della contabilità",
-      description: "Organizzazione e gestione contabile ordinaria e semplificata, con sistemi digitali evoluti. La corretta tenuta della contabilità non è solo un adempimento obbligatorio, ma lo strumento base che consente di monitorare l'andamento aziendale. Non ci limitiamo a \"tenere i conti\": forniamo report e analisi per aiutare l'imprenditore a capire davvero l'andamento della propria attività."
+      description: "Sistemi digitali evoluti per la corretta tenuta della contabilità. Non solo un adempimento obbligatorio, ma lo strumento base che consente di monitorare l'andamento aziendale. Non ci limitiamo a \"tenere i conti\": forniamo report e analisi per aiutare l'imprenditore a capire davvero l'andamento della propria attività."
     },
     {
       id: 5,
-      title: "Analisi finanziaria e studi di fattibilità",
-      description: "Ogni decisione strategica richiede una base numerica solida.\n\nAttraverso strumenti di analisi finanziaria avanzati, offriamo ai nostri clienti una fotografia chiara e dettagliata della situazione economica e patrimoniale dell'impresa.\n\nPrevediamo scenari, valutiamo investimenti e individuiamo punti di forza e debolezza, per sostenere decisioni consapevoli e lungimiranti.\n\nPrima di avviare un nuovo progetto o investimento, è fondamentale valutare rischi e opportunità.\n\nRealizziamo studi di fattibilità completi e personalizzati, fornendo dati concreti e scenari realistici.\n\nAiutiamo così l'imprenditore a pianificare le proprie strategie con lucidità, evitando errori costosi e massimizzando le possibilità di successo."
+      title: "Operazioni straordinarie",
+      description: "Competenze tecniche e visione d'insieme per strutturare e gestire fusioni, scissioni, trasformazioni, cessioni e acquisizioni garantendo sicurezza, trasparenza e coerenza con gli obiettivi aziendali e personali."
+    },
+    {
+      id: 6,
+      title: "Revisione legale",
+      description: "Rigore, indipendenza e attenzione al dettaglio per fornire un giudizio obiettivo e affidabile delle informazioni economico-finanziarie delle imprese, a tutela di soci, stakeholder e investitori."
     }
   ];
 
   return (
     <div className="homepage-container" id="hero-container">
       <div className="navbar">
-        <div className="top-contact-bar">
-          <div className="contact-location">
-            Castelfranco: <span>0571 489029</span>
-          </div>
-          <div className="contact-location">
-            Ponsacco: <span>0587 732559</span>
-          </div>
-        </div>
         <div className='navbar-nav'>
           <div className="navbar-logo" onClick={() => scrollTo('hero-container')}>
             <img src={logo} alt="Studio Malacarne Logo" />
@@ -396,10 +352,10 @@ const Homepage = () => {
             <p onClick={() => scrollTo('chi-siamo-container')}>Chi Siamo</p>
             <p onClick={() => scrollTo('services-section')}>I nostri servizi</p>
             <p onClick={() => scrollTo('lo-studio-container')}>Lo Studio</p>
-            <p onClick={() => scrollTo('p-iva-container')}>P.IVA</p>
+            <p onClick={() => scrollTo('competenze-container')}>Aree di Competenza</p>
             <p onClick={() => scrollTo('contatti-container')}>Contatti</p>
           </div>
-          <div className="navbar-button">
+          <div className="navbar-button" onClick={() => scrollTo('contatti-container')}>
             <FontAwesomeIcon icon={faWhatsapp} />
             <p className="navbar-button-text">Scrivici!</p>
           </div>
@@ -414,7 +370,7 @@ const Homepage = () => {
             <p onClick={() => {scrollTo('chi-siamo-container'); setIsMobileMenuOpen(false);}}>Chi Siamo</p>
             <p onClick={() => {scrollTo('services-section'); setIsMobileMenuOpen(false);}}>I nostri servizi</p>
             <p onClick={() => {scrollTo('lo-studio-container'); setIsMobileMenuOpen(false);}}>Lo Studio</p>
-            <p onClick={() => {scrollTo('p-iva-container'); setIsMobileMenuOpen(false);}}>P.IVA</p>
+            <p onClick={() => {scrollTo('competenze-container'); setIsMobileMenuOpen(false);}}>Aree di Competenza</p>
             <p onClick={() => {scrollTo('contatti-container'); setIsMobileMenuOpen(false);}}>Contatti</p>
             <a
               className="mobile-whatsapp-btn"
@@ -508,16 +464,15 @@ const Homepage = () => {
         <div className="chi-siamo-content">
           <h2 className="chi-siamo-title">Chi Siamo</h2>
           <p className="chi-siamo-text" ref={chiSiamoTextRef}>
-            Siamo due fratelli, dottori commercialisti uniti da una visione comune: rendere la gestione d'impresa semplice e senza perdite di tempo.
+            Lo Studio Malacarne assiste gli imprenditori offrendo un supporto concreto e qualificato nella gestione della loro attività.
             <br /><br />
-            Operiamo in un contesto dove gestire un'attività oggi significa affrontare quotidianamente sfide quasi impossibili: burocrazia, scadenze, norme in continua evoluzione e decisioni da prendere in tempi rapidi.
+            La filosofia dello Studio si fonda su due principi essenziali:
+            <br />
+            1. fornire strumenti chiari per comprendere, analizzare e sviluppare la propria impresa con consapevolezza.
+            <br />
+            2. rendere la gestione aziendale semplice ed efficiente, liberando l'imprenditore dal peso degli adempimenti e permettendogli di concentrarsi pienamente sulla crescita del proprio business.
             <br /><br />
-            Il nostro obiettivo è liberare l'imprenditore dal peso degli adempimenti, permettendogli di pensare esclusivamente a come far crescere la propria impresa.
-            <br /><br />
-            Ci occupiamo di ogni aspetto fiscale, contabile e amministrativo, offrendo strumenti moderni e supporto costante. Vogliamo che ogni imprenditore possa dedicare tempo ed energie al proprio lavoro, senza preoccuparsi della burocrazia.
-            <br /><br />
-            <strong style={{color: '#248193'}}>La nostra filosofia?</strong><br />
-            Trasformare la complessità amministrativa e fiscale in un processo semplice, efficiente e trasparente!
+            L'esperienza maturata in oltre vent'anni di attività consente allo Studio Malacarne di essere un punto di riferimento affidabile per chi desidera un partner professionale capace di trasformare la complessità amministrativa in valore e chiarezza gestionale.
           </p>
         </div>
         <div className="chi-siamo-image">
@@ -527,11 +482,6 @@ const Homepage = () => {
             </div>
             <h3>Dott. Marco Malacarne</h3>
             <p>Laureato in Economia e Commercio presso l'università di Pisa, specializzato in consulenza aziendale, analisi finanziaria e gestione del personale</p>
-            <div className="social-icons">
-              <FontAwesomeIcon icon={faLinkedin} />
-              <FontAwesomeIcon icon={faFacebookF} />
-              <FontAwesomeIcon icon={faWhatsapp} />
-            </div>
           </div>
           <div className="team-member">
             <div className="image-container">
@@ -539,65 +489,10 @@ const Homepage = () => {
             </div>
             <h3>Dott. Simone Malacarne</h3>
             <p>Laureato in Economia e Commercio presso l'università di Pisa, specializzato in consulenza societaria, operazioni straordinarie e revisione legale</p>
-            <div className="social-icons">
-              <FontAwesomeIcon icon={faLinkedin} />
-              <FontAwesomeIcon icon={faFacebookF} />
-              <FontAwesomeIcon icon={faWhatsapp} />
-            </div>
           </div>
         </div>
       </div>
       
-      {/* Sezione metodo di lavoro */}
-      <div className="method-section">
-        <div className="method-content">
-          <h2 className="method-title">Il nostro metodo di lavoro</h2>
-          <div className="method-description" ref={methodDescriptionRef}>
-            <p>
-              Crediamo in un approccio moderno e tecnologico, ma radicato in valori solidi: professionalità, disponibilità e attenzione alle persone.
-              <br /><br />
-              Non solo numeri e adempimenti, ma relazioni di fiducia e strategie concrete per accompagnare la crescita delle imprese.
-              <br /><br />
-              Tecnologia, disponibilità e competenza sono gli strumenti con cui costruiamo ogni giorno relazioni di fiducia con i nostri clienti.
-            </p>
-          </div>
-          
-          <div className="method-cards">
-            <div className="method-card">
-              <div className="method-card-icon">
-                <FontAwesomeIcon icon={faHeadphones} />
-              </div>
-              <h3>Ascolto</h3>
-              <p>Partiamo sempre dalle esigenze specifiche di ogni cliente.</p>
-            </div>
-            
-            <div className="method-card">
-              <div className="method-card-icon">
-                <FontAwesomeIcon icon={faChartLine} />
-              </div>
-              <h3>Pianificazione</h3>
-              <p>Costruiamo strategie fiscali e amministrative personalizzate.</p>
-            </div>
-            
-            <div className="method-card">
-              <div className="method-card-icon">
-                <FontAwesomeIcon icon={faRobot} />
-              </div>
-              <h3>Automazione</h3>
-              <p>Utilizziamo strumenti digitali per ridurre tempi e margini d'errore.</p>
-            </div>
-            
-            <div className="method-card">
-              <div className="method-card-icon">
-                <FontAwesomeIcon icon={faHandsHelping} />
-              </div>
-              <h3>Supporto costante</h3>
-              <p>Siamo sempre disponibili, non solo a scadenze.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Sezione I nostri servizi */}
       <div className="services-section" id="services-section" ref={servicesSectionRef}>
         <div className="services-content">
@@ -609,35 +504,12 @@ const Homepage = () => {
             </p>
           </div>
           
-          <div className="simple-carousel">
-            <button className="carousel-arrow carousel-arrow-left" onClick={prevService}>
-              <FontAwesomeIcon icon={faChevronLeft} />
-            </button>
-            
-            <div className="carousel-wrapper">
-              <div 
-                key={currentServiceIndex}
-                className={`carousel-slide slide-${slideDirection}`}
-              >
-                <div className="service-card">
-                  <h3 className="service-title">{services[currentServiceIndex].title}</h3>
-                  <p className="service-description">{services[currentServiceIndex].description}</p>
-                </div>
+          <div className="services-grid">
+            {services.map((service) => (
+              <div key={service.id} className="service-card">
+                <h3 className="service-title">{service.title}</h3>
+                <p className="service-description">{service.description}</p>
               </div>
-            </div>
-            
-            <button className="carousel-arrow carousel-arrow-right" onClick={nextService}>
-              <FontAwesomeIcon icon={faChevronRight} />
-            </button>
-          </div>
-          
-          <div className="carousel-indicators">
-            {services.map((_, index) => (
-              <button
-                key={index}
-                className={`indicator ${index === currentServiceIndex ? 'active' : ''}`}
-                onClick={() => goToService(index)}
-              />
             ))}
           </div>
         </div>
@@ -647,7 +519,7 @@ const Homepage = () => {
           <div className="lo-studio-content">
             <h2 className="lo-studio-title">Lo Studio</h2>
             <p className="lo-studio-text" ref={loStudioTextRef}>
-              Il nostro studio professionale si articola in due sedi strategicamente posizionate per servire al meglio la nostra clientela. La sede storica di Castelfranco, specializzata nella consulenza fiscale e tributaria per le piccole e medie imprese, e la sede di Ponsacco, focalizzata sulla gestione contabile e sulla consulenza del lavoro. Questa duplice presenza ci permette di offrire un servizio completo e specializzato, combinando l'expertise di entrambe le sedi per garantire soluzioni personalizzate per ogni cliente.
+              Due sedi, un'unica visione per accompagnare imprenditori e professionisti con consulenza su misura nel loro percorso di crescita
             </p>
           </div>
           <div className="lo-studio-castelfranco">
@@ -657,16 +529,42 @@ const Homepage = () => {
               className="studio-image"
             />
             <div className="studio-content studio-content-castelfranco">
-              <h2 className="studio-title">Castelfranco</h2>
-              <p className="studio-description">
-                La nostra sede storica di Castelfranco è specializzata nella consulenza fiscale 
-                e tributaria per le piccole e medie imprese. Con anni di esperienza nel settore, 
-                offriamo soluzioni personalizzate per ogni esigenza aziendale.
+              <h2 className="studio-title">Castelfranco Di Sotto</h2>
+              <p className="studio-intro">
+                Lo Studio Malacarne nasce a Castelfranco di Sotto, nel cuore del comprensorio del cuoio. Un contesto unico, che ha formato la nostra esperienza e ci ha insegnato il valore della precisione, della competenza e del lavoro ben fatto.
               </p>
-              <a href="tel:+390571489029" className="studio-phone">
-                <FontAwesomeIcon icon={faPhone} />
-                +39 0571 489029
-              </a>
+              <div className="studio-info">
+                <p className="studio-address">
+                  Piazza XX Settembre n.11 – 56020 Castelfranco Di Sotto (PI)
+                </p>
+                <p className="studio-hours">
+                  Orario: 9:00 – 13:00  15:00 – 19:00
+                </p>
+                <p className="studio-phone-text">
+                  Tel: <a href="tel:+390571489029">0571 489029</a>
+                </p>
+                <p className="studio-email-text">
+                  <a href="mailto:cf@studiomalacarne.com">cf@studiomalacarne.com</a>
+                </p>
+              </div>
+              <div className="studio-links">
+                <a href="tel:+390571489029" className="studio-link">
+                  <FontAwesomeIcon icon={faPhone} />
+                  Chiamami
+                </a>
+                <a href="https://wa.me/390571489029" target="_blank" rel="noreferrer" className="studio-link">
+                  <FontAwesomeIcon icon={faWhatsapp} />
+                  WhatsApp
+                </a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Piazza+XX+Settembre+11+Castelfranco+Di+Sotto+PI" target="_blank" rel="noreferrer" className="studio-link">
+                  <FontAwesomeIcon icon={faMapMarkerAlt} />
+                  Naviga
+                </a>
+                <a href="mailto:cf@studiomalacarne.com" className="studio-link">
+                  <FontAwesomeIcon icon={faEnvelope} />
+                  Email
+                </a>
+              </div>
             </div>
           </div>
 
@@ -678,37 +576,176 @@ const Homepage = () => {
             />
             <div className="studio-content studio-content-ponsacco">
               <h2 className="studio-title">Ponsacco</h2>
-              <p className="studio-description">
-                La sede di Ponsacco è il nostro centro specializzato nella gestione contabile 
-                e nella consulenza del lavoro. Il nostro team di esperti è pronto ad assistere 
-                professionisti e aziende con servizi mirati e consulenza specialistica.
+              <p className="studio-intro">
+                A Ponsacco, storica città del mobile, offriamo consulenza a imprese e professionisti che affrontano un mercato in evoluzione, aiutandoli a rinnovarsi e a costruire nuove opportunità.
               </p>
-              <a href="tel:+390587732559" className="studio-phone">
-                <FontAwesomeIcon icon={faPhone} />
-                +39 0587 732559
-              </a>
+              <div className="studio-info">
+                <p className="studio-address">
+                  Via Togliatti n.5 – 56038 Ponsacco (PI)
+                </p>
+                <p className="studio-hours">
+                  Orario: 8:30 – 12:30  15:00 – 19:00
+                </p>
+                <p className="studio-phone-text">
+                  Tel: <a href="tel:+390587732559">0587 732559</a>
+                </p>
+                <p className="studio-email-text">
+                  <a href="mailto:ponsacco@studiomalacarne.com">ponsacco@studiomalacarne.com</a>
+                </p>
+              </div>
+              <div className="studio-links">
+                <a href="tel:+390587732559" className="studio-link">
+                  <FontAwesomeIcon icon={faPhone} />
+                  Chiamami
+                </a>
+                <a href="https://wa.me/390587732559" target="_blank" rel="noreferrer" className="studio-link">
+                  <FontAwesomeIcon icon={faWhatsapp} />
+                  WhatsApp
+                </a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Via+Togliatti+5+Ponsacco+PI" target="_blank" rel="noreferrer" className="studio-link">
+                  <FontAwesomeIcon icon={faMapMarkerAlt} />
+                  Naviga
+                </a>
+                <a href="mailto:ponsacco@studiomalacarne.com" className="studio-link">
+                  <FontAwesomeIcon icon={faEnvelope} />
+                  Email
+                </a>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="p-iva-container" id="p-iva-container">
-          <div className="p-iva-content">
-            <h2 className="p-iva-title">Cosa è la P.IVA?</h2>
-            <p className="p-iva-text" ref={pIvaTextRef}>
-              La Partita IVA è un codice identificativo fondamentale per le attività commerciali e professionali in Italia. 
-              Questo numero univoco di 11 cifre viene utilizzato per identificare in modo inequivocabile un'azienda o un professionista 
-              nei rapporti con l'amministrazione finanziaria. È essenziale per la fatturazione, la dichiarazione dei redditi 
-              e per tutti gli adempimenti fiscali previsti dalla legge italiana.
-            </p>
+        <div className="competenze-container" id="competenze-container">
+          <div className="competenze-content">
+            <h2 className="competenze-title">Aree di Competenza</h2>
+            <div className="competenze-grid">
+              <div className="competenza-box">
+                <div className="competenza-image">
+                  <img src="/api/placeholder/80/80" alt="Consulenza fiscale" />
+                </div>
+                <h3 className="competenza-title">Consulenza Fiscale</h3>
+              </div>
+              <div className="competenza-box">
+                <div className="competenza-image">
+                  <img src="/api/placeholder/80/80" alt="Consulenza societaria" />
+                </div>
+                <h3 className="competenza-title">Consulenza Societaria</h3>
+              </div>
+              <div className="competenza-box">
+                <div className="competenza-image">
+                  <img src="/api/placeholder/80/80" alt="Gestione del personale" />
+                </div>
+                <h3 className="competenza-title">Gestione del Personale</h3>
+              </div>
+              <div className="competenza-box">
+                <div className="competenza-image">
+                  <img src="/api/placeholder/80/80" alt="Tenuta contabilità" />
+                </div>
+                <h3 className="competenza-title">Tenuta della Contabilità</h3>
+              </div>
+              <div className="competenza-box">
+                <div className="competenza-image">
+                  <img src="/api/placeholder/80/80" alt="Analisi finanziaria" />
+                </div>
+                <h3 className="competenza-title">Analisi Finanziaria</h3>
+              </div>
+              <div className="competenza-box">
+                <div className="competenza-image">
+                  <img src="/api/placeholder/80/80" alt="Operazioni straordinarie" />
+                </div>
+                <h3 className="competenza-title">Operazioni Straordinarie</h3>
+              </div>
+              <div className="competenza-box">
+                <div className="competenza-image">
+                  <img src="/api/placeholder/80/80" alt="Revisione legale" />
+                </div>
+                <h3 className="competenza-title">Revisione Legale</h3>
+              </div>
+            </div>
           </div>
-          <a 
-            href="/piva" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="scopri-piu-btn"
-          >
-            Scopri di più
-          </a>
+        </div>
+
+        <div className="specializzazioni-container" id="specializzazioni-container">
+          <div className="specializzazioni-content">
+            <h2 className="specializzazioni-title">Le Nostre Specializzazioni</h2>
+            <p className="specializzazioni-intro">
+              Non tutte le aziende sono uguali. Ogni settore richiede competenze specifiche e un approccio dedicato. Grazie all'esperienza maturata in contesti diversi, lo Studio Malacarne offre consulenza mirata in aree dove la conoscenza delle dinamiche operative e normative fa davvero la differenza.
+            </p>
+            <div className="specializzazioni-grid">
+              <div className="specializzazione-item">
+                <div className="specializzazione-icon">
+                  <FontAwesomeIcon icon={faUserDoctor} />
+                </div>
+                <h3 className="specializzazione-title">Medici e professioni sanitarie</h3>
+              </div>
+              <div className="specializzazione-item">
+                <div className="specializzazione-icon">
+                  <FontAwesomeIcon icon={faPills} />
+                </div>
+                <h3 className="specializzazione-title">Farmacie</h3>
+              </div>
+              <div className="specializzazione-item">
+                <div className="specializzazione-icon">
+                  <FontAwesomeIcon icon={faHammer} />
+                </div>
+                <h3 className="specializzazione-title">Edilizia</h3>
+              </div>
+              <div className="specializzazione-item">
+                <div className="specializzazione-icon">
+                  <FontAwesomeIcon icon={faPlane} />
+                </div>
+                <h3 className="specializzazione-title">Agenzie di viaggio</h3>
+              </div>
+              <div className="specializzazione-item">
+                <div className="specializzazione-icon">
+                  <FontAwesomeIcon icon={faCar} />
+                </div>
+                <h3 className="specializzazione-title">Beni e autoveicoli usati</h3>
+              </div>
+              <div className="specializzazione-item">
+                <div className="specializzazione-icon">
+                  <FontAwesomeIcon icon={faSmoking} />
+                </div>
+                <h3 className="specializzazione-title">Tabacchi</h3>
+              </div>
+              <div className="specializzazione-item">
+                <div className="specializzazione-icon">
+                  <FontAwesomeIcon icon={faInstagram} />
+                </div>
+                <h3 className="specializzazione-title">Influencer</h3>
+              </div>
+              <div className="specializzazione-item">
+                <div className="specializzazione-icon">
+                  <FontAwesomeIcon icon={faBitcoin} />
+                </div>
+                <h3 className="specializzazione-title">Criptovalute</h3>
+              </div>
+              <div className="specializzazione-item">
+                <div className="specializzazione-icon">
+                  <FontAwesomeIcon icon={faGlobe} />
+                </div>
+                <h3 className="specializzazione-title">Commercio con l'estero</h3>
+              </div>
+              <div className="specializzazione-item">
+                <div className="specializzazione-icon">
+                  <FontAwesomeIcon icon={faHouse} />
+                </div>
+                <h3 className="specializzazione-title">Affitti brevi e locazioni turistiche</h3>
+              </div>
+              <div className="specializzazione-item">
+                <div className="specializzazione-icon">
+                  <FontAwesomeIcon icon={faHome} />
+                </div>
+                <h3 className="specializzazione-title">Lavoro domestico</h3>
+              </div>
+              <div className="specializzazione-item">
+                <div className="specializzazione-icon">
+                  <FontAwesomeIcon icon={faFileInvoice} />
+                </div>
+                <h3 className="specializzazione-title">Contribuenti forfettari</h3>
+              </div>
+            </div>
+          </div>
         </div>
 
       {showScrollTop && (
