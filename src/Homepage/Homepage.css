@@ -9,11 +9,11 @@
 .homepage-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 0;
     padding: 0;
     padding-top: 0;
     overflow-x: hidden;
-    background-color: #eeeae3;
+    background-color: white;
 }
 
 .navbar {
@@ -551,7 +551,8 @@
     justify-content: center;
     min-height: 100vh;
     padding: 50px 0;
-    padding-top: 10px;
+    margin-top: 60px;
+    background-color: #f5f5f5;
     background-image: url('../Images/bg2.png');
     background-size: cover;
     background-position: center;
@@ -571,25 +572,17 @@
     background-clip: text;
     color: transparent;
     text-align: center;
-    margin: 0 0 60px 0;
+    margin: 0 0 40px 0;
     padding: 0;
 }
 
 .chi-siamo-text {
-    margin: 0 auto;
+    margin: 0 auto 40px auto;
     padding: 0 20px;
     font-size: 1.2rem;
     text-align: left;
-    opacity: 0;
-    transform: translateY(50px);
-    transition: all 1s ease;
     line-height: 1.2;
     max-width: 1100px;
-}
-
-.chi-siamo-text.visible {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 .chi-siamo-image {
@@ -725,7 +718,7 @@
 .lo-studio-content {
     width: 95%;
     margin: 0 auto;
-    padding: 20px;
+    padding: 0 20px 20px 20px;
     background-color: transparent;
 }
 
@@ -734,39 +727,36 @@
     font-weight: bold;
     color: white;
     text-align: center;
-    margin: 0 0 60px 0;
+    margin: 0 0 40px 0;
     padding: 0;
     position: relative;
     z-index: 10;
 }
 
 .lo-studio-text {
-    margin: 0 auto;
+    margin: 0 auto 40px auto;
     padding: 0 20px;
     font-size: 1.2rem;
     text-align: center;
-    opacity: 0;
-    transform: translateY(50px);
-    transition: all 1s ease;
     color: white;
     max-width: 1100px;
     line-height: 1.2;
 }
 
-.lo-studio-text.visible {
-    opacity: 1;
-    transform: translateY(0);
+.lo-studio-castelfranco {
+    margin-top: 0;
 }
 
 .lo-studio-castelfranco, .lo-studio-ponsacco {
-    width: 80%;
+    width: 85%;
     display: flex;
-    align-items: center;
-    gap: 40px;
-    padding: 20px;
-    margin: 20px 0;
+    align-items: stretch;
+    gap: 0;
+    padding: 0;
+    margin: 20px auto;
     border-radius: 10px;
     background-color:white;
+    overflow: hidden;
 }
 
 .lo-studio-ponsacco {
@@ -774,27 +764,30 @@
 }
 
 .studio-image {
-    width: 400px;
-    height: 400px;
+    flex: 0 0 50%;
+    width: 50%;
+    height: 100%;
     object-fit: cover;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-radius: 0;
+    box-shadow: none;
 }
 
 .studio-content {
     flex: 1;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 20px;
+    padding: 30px;
 }
 
 /* Desktop layout */
 .studio-content-castelfranco {
-    margin-left: 20px;
+    margin-left: 0;
 }
 
 .studio-content-ponsacco {
-    margin-right: 20px;
+    margin-right: 0;
     text-align: right;
 }
 
@@ -807,6 +800,7 @@
     font-weight: bold;
     color: #248193;
     margin: 0;
+    padding: 0;
 }
 
 .studio-description {
@@ -820,12 +814,13 @@
     font-size: 1.1rem;
     line-height: 1.6;
     color: #333;
-    margin: 0 0 20px 0;
+    margin: 0;
     padding: 0;
 }
 
 .studio-info {
-    margin: 20px 0;
+    margin: 0;
+    padding: 0;
 }
 
 .studio-address,
@@ -859,7 +854,16 @@
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-top: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.studio-content-castelfranco .studio-links {
+    justify-content: flex-start;
+}
+
+.studio-content-ponsacco .studio-links {
+    justify-content: flex-end;
 }
 
 .studio-link {
@@ -902,84 +906,6 @@
     transform: translateY(-2px);
 }
 
-.competenze-container {
-    width: 90%;
-    margin: 50px auto;
-    padding: 100px 0;
-    background-color: #f8f9fa;
-    border-radius: 20px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    overflow: visible;
-}
-
-.competenze-content {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.competenze-title {
-    font-size: 3rem;
-    font-weight: bold;
-    color: #248193;
-    text-align: center;
-    margin: 0 0 60px 0;
-    padding: 0;
-}
-
-.competenze-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 30px;
-    margin-top: 40px;
-    padding: 20px 0;
-}
-
-.competenza-box {
-    background-color: white;
-    padding: 30px 20px;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-    border: 1px solid rgba(36, 129, 147, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-}
-
-.competenza-box:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    border-color: #248193;
-}
-
-.competenza-image {
-    width: 80px;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    border-radius: 10px;
-}
-
-.competenza-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.competenza-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #248193;
-    margin: 0;
-    padding: 0;
-}
-
 /* Sezione Specializzazioni */
 .specializzazioni-container {
     width: 100%;
@@ -1001,7 +927,7 @@
     font-weight: bold;
     color: #248193;
     text-align: center;
-    margin: 0 0 30px 0;
+    margin: 0 0 40px 0;
     padding: 0;
 }
 
@@ -1010,7 +936,7 @@
     color: #333;
     text-align: center;
     line-height: 1.6;
-    margin: 0 auto 50px auto;
+    margin: 0 auto 40px auto;
     padding: 0 20px;
     max-width: 1100px;
 }
@@ -1349,7 +1275,7 @@
 /* Sezione I nostri servizi */
 .services-section {
   width: 100%;
-  padding: 80px 0;
+  padding: 80px 0 100px 0;
   background-color: white;
 }
 
@@ -1365,16 +1291,13 @@
   font-weight: bold;
   color: #248193;
   text-align: center;
-  margin: 0 0 60px 0;
+  margin: 0 0 40px 0;
   padding: 0;
 }
 
 .services-description {
   text-align: center;
-  margin-bottom: 60px;
-  opacity: 0;
-  transform: translateY(50px);
-  transition: all 1s ease;
+  margin-bottom: 40px;
 }
 
 .services-description p {
@@ -1386,18 +1309,13 @@
   padding: 0 20px;
 }
 
-.services-description.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 /* Griglia servizi */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 colonne su desktop */
+  grid-template-columns: repeat(3, 1fr); /* 3 colonne su desktop */
   gap: 30px;
   margin: 50px 0;
-  padding: 0 40px;
+  padding:40px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -1638,7 +1556,7 @@
   
   /* Chi Siamo */
 
-  .chi-siamo-title, .services-title, .lo-studio-title, .competenze-title, .specializzazioni-title {
+  .chi-siamo-title, .services-title, .lo-studio-title, .specializzazioni-title {
     margin: 0 0 20px 0 !important;
   }
 
@@ -1729,13 +1647,20 @@
     height: 250px !important;
     object-fit: cover !important;
     margin-bottom: 15px !important;
+    border-radius: 10px !important;
   }
   
   .studio-content {
     width: 90% !important;
     text-align: center !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 20px !important;
+  }
+  
+  .studio-content-castelfranco .studio-links,
+  .studio-content-ponsacco .studio-links {
+    justify-content: center !important;
   }
   
   /* Reset degli stili desktop su mobile */
@@ -1745,6 +1670,15 @@
   
   .studio-content-ponsacco {
     margin-right: 0 !important;
+    text-align: center !important;
+  }
+  
+  .studio-intro,
+  .studio-info,
+  .studio-address,
+  .studio-hours,
+  .studio-phone-text,
+  .studio-email-text {
     text-align: center !important;
   }
   
@@ -1770,22 +1704,6 @@
 
   .studio-phone {
     margin: 0 auto !important;
-  }
-  
-  /* Aree di Competenza */
-  .competenze-container {
-    width: 90% !important;
-    padding: 50px 0 !important;
-  }
-  .competenze-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 20px !important;
-  }
-  .competenza-box {
-    padding: 25px 15px !important;
-  }
-  .competenza-title {
-    font-size: 1rem !important;
   }
   
   /* Footer Mobile - Layout 3 Righe */
@@ -1916,24 +1834,6 @@
   }
   
   .lo-studio-text {
-    font-size: 0.9rem;
-  }
-  
-  /* Aree di Competenza */
-  .competenze-title {
-    font-size: 2rem;
-  }
-  
-  .competenze-grid {
-    grid-template-columns: 1fr !important;
-    gap: 15px !important;
-  }
-  
-  .competenza-box {
-    padding: 20px 15px !important;
-  }
-  
-  .competenza-title {
     font-size: 0.9rem;
   }
   

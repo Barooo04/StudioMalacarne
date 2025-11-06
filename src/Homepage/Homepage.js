@@ -15,11 +15,7 @@ import studioCastelfranco from '../Images/studioCastelfranco.png';
 
 const Homepage = () => {
   const chatInputRef = useRef(null);
-  const chiSiamoTextRef = useRef(null);
   const servicesSectionRef = useRef(null);
-  const loStudioTextRef = useRef(null);
-  const pIvaTextRef = useRef(null);
-  const servicesDescriptionRef = useRef(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [threadId, setThreadId] = useState(null);
   const [messages, setMessages] = useState([
@@ -232,54 +228,6 @@ const Homepage = () => {
   };
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      },
-      { threshold: 0.1,
-       }
-    );
-
-    if (chiSiamoTextRef.current) {
-      observer.observe(chiSiamoTextRef.current);
-    }
-
-    if (loStudioTextRef.current) {
-      observer.observe(loStudioTextRef.current);
-    }
-
-    if (pIvaTextRef.current) {
-      observer.observe(pIvaTextRef.current);
-    }
-
-    if (servicesDescriptionRef.current) {
-      observer.observe(servicesDescriptionRef.current);
-    }
-
-    return () => {
-      if (chiSiamoTextRef.current) {
-        observer.unobserve(chiSiamoTextRef.current);
-      }
-
-      if (loStudioTextRef.current) {
-        observer.unobserve(loStudioTextRef.current);
-      }
-
-      if (pIvaTextRef.current) {
-        observer.unobserve(pIvaTextRef.current);
-      }
-
-      if (servicesDescriptionRef.current) {
-        observer.unobserve(servicesDescriptionRef.current);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 300) {
         setShowScrollTop(true);
@@ -303,23 +251,23 @@ const Homepage = () => {
   const services = [
     {
       id: 1,
-      title: "Consulenza fiscale e societaria",
-      description: "Un affiancamento per l'imprenditore per garantire una corretta pianificazione fiscale, la gestione di tutti gli adempimenti e l'ottimizzazione della posizione tributaria. Assistenza costante per ridurre i rischi, cogliere le opportunità normative e prevenire situazioni critiche.\n\nL'ambito fiscale rappresenta spesso una delle principali preoccupazioni per le imprese. Nonostante il massimo impegno, considerando la complessità e l'incoerenza del sistema tributario, quando sorgono controversie con l'amministrazione finanziaria, è importante avere al proprio fianco un professionista competente e determinato. Offriamo assistenza completa nel contenzioso tributario, dalla fase di accertamento a quella di difesa, con l'obiettivo di tutelare al massimo gli interessi del cliente. Operiamo con competenza tecnica e strategica, riducendo i rischi e cercando sempre soluzioni efficaci.\n\nSupporto nella scelta della forma giuridica più adatta non solo in ottica fiscale, ma soprattutto per una tutela patrimoniale dei soggetti coinvolti. Come professionisti non possiamo permettere che l'impegno di una vita vada in malora a causa di un'errata scelta d'impostazione societaria fatta a monte."
+      title: "Tenuta della contabilità",
+      description: "Sistemi digitali evoluti per fornire report e analisi per aiutare l'imprenditore a capire davvero l'andamento della propria attività."
     },
     {
       id: 2,
-      title: "Analisi finanziaria e business plan",
-      description: "Una fotografia chiara e dettagliata della situazione economica e patrimoniale dell'impresa attraverso strumenti di analisi finanziaria avanzati, base numerica solida per ogni decisione strategica dell'imprenditore.\n\nPrevisione di scenari, valutazione di investimenti ed individuazione di punti di forza e debolezza, rischi ed opportunità per sostenere decisioni consapevoli e lungimiranti prima di avviare un nuovo progetto o investimento. Studi di fattibilità completi e personalizzati, fornendo dati concreti e scenari realistici per aiutare l'imprenditore a pianificare le proprie strategie con lucidità, evitando errori costosi e massimizzando le possibilità di successo."
+      title: "Gestione del personale dipendente",
+      description: "Un supporto concreto nella gestione dei rapporti col personale per prevenire criticità che potrebbero trasformarsi in problemi più seri."
     },
     {
       id: 3,
-      title: "Gestione del personale dipendente",
-      description: "Elaborazione paghe, adempimenti contributivi, consulenza contrattuale e non solo. Un supporto concreto nella gestione dei rapporti interni: interveniamo in caso di tensioni o conflitti tra azienda e personale, aiutando l'imprenditore a trovare soluzioni efficaci, equilibrate e rispettose dei diritti di tutte le parti coinvolte con l'obiettivo è costruire un ambiente di lavoro sereno e produttivo, prevenendo criticità che potrebbero trasformarsi in problemi più seri."
+      title: "Consulenza fiscale e societaria",
+      description: "Un affiancamento costante per la gestione di tutti gli adempimenti fiscali, per ridurre i rischi, cogliere le opportunità normative e prevenire situazioni critiche. Un supporto nella scelta della forma giuridica più adatta in ottica fiscale, per una tutela patrimoniale dei soggetti coinvolti."
     },
     {
       id: 4,
-      title: "Tenuta della contabilità",
-      description: "Sistemi digitali evoluti per la corretta tenuta della contabilità. Non solo un adempimento obbligatorio, ma lo strumento base che consente di monitorare l'andamento aziendale. Non ci limitiamo a \"tenere i conti\": forniamo report e analisi per aiutare l'imprenditore a capire davvero l'andamento della propria attività."
+      title: "Analisi finanziaria e business plan",
+      description: "La fotografia della situazione economica e patrimoniale dell'impresa come base numerica solida per ogni decisione strategica dell'imprenditore. Previsione di scenari e valutazione di investimenti per sostenere decisioni consapevoli e lungimiranti prima di avviare un nuovo progetto o investimento, evitando errori costosi e massimizzando le possibilità di successo."
     },
     {
       id: 5,
@@ -352,7 +300,6 @@ const Homepage = () => {
             <p onClick={() => scrollTo('chi-siamo-container')}>Chi Siamo</p>
             <p onClick={() => scrollTo('services-section')}>I nostri servizi</p>
             <p onClick={() => scrollTo('lo-studio-container')}>Lo Studio</p>
-            <p onClick={() => scrollTo('competenze-container')}>Aree di Competenza</p>
             <p onClick={() => scrollTo('contatti-container')}>Contatti</p>
           </div>
           <div className="navbar-button" onClick={() => scrollTo('contatti-container')}>
@@ -370,7 +317,6 @@ const Homepage = () => {
             <p onClick={() => {scrollTo('chi-siamo-container'); setIsMobileMenuOpen(false);}}>Chi Siamo</p>
             <p onClick={() => {scrollTo('services-section'); setIsMobileMenuOpen(false);}}>I nostri servizi</p>
             <p onClick={() => {scrollTo('lo-studio-container'); setIsMobileMenuOpen(false);}}>Lo Studio</p>
-            <p onClick={() => {scrollTo('competenze-container'); setIsMobileMenuOpen(false);}}>Aree di Competenza</p>
             <p onClick={() => {scrollTo('contatti-container'); setIsMobileMenuOpen(false);}}>Contatti</p>
             <a
               className="mobile-whatsapp-btn"
@@ -463,7 +409,7 @@ const Homepage = () => {
       <div className="chi-siamo-container" id="chi-siamo-container">
         <div className="chi-siamo-content">
           <h2 className="chi-siamo-title">Chi Siamo</h2>
-          <p className="chi-siamo-text" ref={chiSiamoTextRef}>
+          <p className="chi-siamo-text">
             Lo Studio Malacarne assiste gli imprenditori offrendo un supporto concreto e qualificato nella gestione della loro attività.
             <br /><br />
             La filosofia dello Studio si fonda su due principi essenziali:
@@ -492,12 +438,12 @@ const Homepage = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Sezione I nostri servizi */}
       <div className="services-section" id="services-section" ref={servicesSectionRef}>
         <div className="services-content">
           <h2 className="services-title">I nostri servizi</h2>
-          <div className="services-description" ref={servicesDescriptionRef}>
+          <div className="services-description">
             <p>
               Offriamo un'ampia gamma di servizi professionali per supportare le aziende in ogni aspetto della loro attività. 
               La nostra esperienza e competenza ci permettono di fornire soluzioni personalizzate che rispondono alle esigenze specifiche di ogni cliente.
@@ -518,7 +464,7 @@ const Homepage = () => {
         <div className="lo-studio-container" id="lo-studio-container">
           <div className="lo-studio-content">
             <h2 className="lo-studio-title">Lo Studio</h2>
-            <p className="lo-studio-text" ref={loStudioTextRef}>
+            <p className="lo-studio-text">
               Due sedi, un'unica visione per accompagnare imprenditori e professionisti con consulenza su misura nel loro percorso di crescita
             </p>
           </div>
@@ -549,7 +495,7 @@ const Homepage = () => {
               </div>
               <div className="studio-links">
                 <a href="tel:+390571489029" className="studio-link">
-                  <FontAwesomeIcon icon={faPhone} />
+                <FontAwesomeIcon icon={faPhone} />
                   Chiamami
                 </a>
                 <a href="https://wa.me/390571489029" target="_blank" rel="noreferrer" className="studio-link">
@@ -595,7 +541,7 @@ const Homepage = () => {
               </div>
               <div className="studio-links">
                 <a href="tel:+390587732559" className="studio-link">
-                  <FontAwesomeIcon icon={faPhone} />
+                <FontAwesomeIcon icon={faPhone} />
                   Chiamami
                 </a>
                 <a href="https://wa.me/390587732559" target="_blank" rel="noreferrer" className="studio-link">
@@ -610,56 +556,6 @@ const Homepage = () => {
                   <FontAwesomeIcon icon={faEnvelope} />
                   Email
                 </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="competenze-container" id="competenze-container">
-          <div className="competenze-content">
-            <h2 className="competenze-title">Aree di Competenza</h2>
-            <div className="competenze-grid">
-              <div className="competenza-box">
-                <div className="competenza-image">
-                  <img src="/api/placeholder/80/80" alt="Consulenza fiscale" />
-                </div>
-                <h3 className="competenza-title">Consulenza Fiscale</h3>
-              </div>
-              <div className="competenza-box">
-                <div className="competenza-image">
-                  <img src="/api/placeholder/80/80" alt="Consulenza societaria" />
-                </div>
-                <h3 className="competenza-title">Consulenza Societaria</h3>
-              </div>
-              <div className="competenza-box">
-                <div className="competenza-image">
-                  <img src="/api/placeholder/80/80" alt="Gestione del personale" />
-                </div>
-                <h3 className="competenza-title">Gestione del Personale</h3>
-              </div>
-              <div className="competenza-box">
-                <div className="competenza-image">
-                  <img src="/api/placeholder/80/80" alt="Tenuta contabilità" />
-                </div>
-                <h3 className="competenza-title">Tenuta della Contabilità</h3>
-              </div>
-              <div className="competenza-box">
-                <div className="competenza-image">
-                  <img src="/api/placeholder/80/80" alt="Analisi finanziaria" />
-                </div>
-                <h3 className="competenza-title">Analisi Finanziaria</h3>
-              </div>
-              <div className="competenza-box">
-                <div className="competenza-image">
-                  <img src="/api/placeholder/80/80" alt="Operazioni straordinarie" />
-                </div>
-                <h3 className="competenza-title">Operazioni Straordinarie</h3>
-              </div>
-              <div className="competenza-box">
-                <div className="competenza-image">
-                  <img src="/api/placeholder/80/80" alt="Revisione legale" />
-                </div>
-                <h3 className="competenza-title">Revisione Legale</h3>
               </div>
             </div>
           </div>
@@ -783,13 +679,13 @@ const Homepage = () => {
             <div className="location">
               <h3 className="location-title">Castelfranco</h3>
               <div className="location-info">
-                <p>Castelfranco di Sotto (PI)</p>
-                <p>Tel: +39 0571 489029</p>
+                <p>Piazza XX Settembre n.11 – 56020 Castelfranco Di Sotto (PI)</p>
+                <p>Tel: <a href="tel:+390571489029" style={{color: 'inherit'}}>0571 489029</a></p>
                 <p>Email: <a href="mailto:cf@studiomalacarne.com" style={{color: 'inherit'}}>cf@studiomalacarne.com</a></p>
-                <p>Lun-Ven: 9:00-18:00</p>
+                <p>Orario: 9:00 – 13:00  15:00 – 19:00</p>
               </div>
               <iframe 
-                src="https://www.google.com/maps?q=Castelfranco%20di%20Sotto%2C%20Pisa&output=embed" 
+                src="https://www.google.com/maps?q=Piazza+XX+Settembre+11+Castelfranco+Di+Sotto+PI&output=embed" 
                 className="location-map" 
                 title="Sede Castelfranco"
                 loading="lazy"
@@ -801,13 +697,13 @@ const Homepage = () => {
             <div className="location">
               <h3 className="location-title">Ponsacco</h3>
               <div className="location-info">
-                <p>Ponsacco (PI)</p>
-                <p>Tel: +39 0587 732559</p>
+                <p>Via Togliatti n.5 – 56038 Ponsacco (PI)</p>
+                <p>Tel: <a href="tel:+390587732559" style={{color: 'inherit'}}>0587 732559</a></p>
                 <p>Email: <a href="mailto:ponsacco@studiomalacarne.com" style={{color: 'inherit'}}>ponsacco@studiomalacarne.com</a></p>
-                <p>Lun-Ven: 9:00-18:00</p>
+                <p>Orario: 8:30 – 12:30  15:00 – 19:00</p>
               </div>
               <iframe 
-                src="https://www.google.com/maps?q=Ponsacco%2C%20Pisa&output=embed" 
+                src="https://www.google.com/maps?q=Via+Togliatti+5+Ponsacco+PI&output=embed" 
                 className="location-map" 
                 title="Sede Ponsacco"
                 loading="lazy"
