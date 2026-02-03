@@ -1543,6 +1543,7 @@
     order: 1 !important;
     margin-bottom: 32px !important; /* più distanza tra hero-content e hero-chat */
     text-align: center !important;
+    overflow-y: hidden !important;
   }
 
   .title {
