@@ -21,7 +21,6 @@ const Homepage = () => {
   const [messages, setMessages] = useState([
     { id: 1, text: "Ciao! Come posso aiutarti oggi?", isAssistant: true }
   ]);
-  const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [isChatActive, setIsChatActive] = useState(false);
   const [showQuickQuestions, setShowQuickQuestions] = useState(true);
