@@ -28,7 +28,7 @@ const Homepage = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const messagesEndRef = useRef(null);
 
-  const API = "https://servermalacarne.onrender.com/api";
+  const API = "https://servermalacarne.onrender.com";
 
   const scrollToBottom = () => {
     const messageContainer = document.querySelector('.chat-messages');
@@ -354,7 +354,8 @@ const Homepage = () => {
               </div>
             ))}
             {isTyping && (
-              <div className="message assistant">
+              <div className="message assistant typing-indicator">
+                <span className="thinking-text">Sto pensando</span>
                 <div className="loading-dots">
                   <span></span>
                   <span></span>

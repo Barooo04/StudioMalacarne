@@ -1122,16 +1122,28 @@
     font-size: 0.9rem;
 }
 
+.typing-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.thinking-text {
+  font-size: 0.9rem;
+  color: #ffffff;
+  animation: thinkingPulse 1.2s ease-in-out infinite;
+}
+
 .loading-dots {
   display: flex;
   gap: 4px;
-  padding: 10px;
+  padding: 6px 0;
 }
 
 .loading-dots span {
   width: 8px;
   height: 8px;
-  background-color: #248193;
+  background-color: #ffffff;
   border-radius: 50%;
   animation: loading 1.4s infinite;
 }
@@ -1153,6 +1165,18 @@
   }
   100% {
     opacity: 0.2;
+  }
+}
+
+@keyframes thinkingPulse {
+  0% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.4;
   }
 }
 
@@ -1461,8 +1485,8 @@
   .navbar-nav {
     position: relative !important;
     min-height: 56px !important;
-    justify-content: space-around !important;
     align-items: center !important;
+    padding-left: 10px !important;
   }
   
   .navbar-links {
@@ -1501,22 +1525,23 @@
   /* Hero section - Mobile Vertical Layout */
   .hero-container {
     width: 95% !important;
-    margin-left: 0 auto !important;
-    height: auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 56px !important; /* il blocco grigio parte subito sotto la navbar (alta ~56px) */
+    min-height: calc(100vh - 56px) !important; /* quasi 100vh, meno l'altezza navbar */
     flex-direction: column !important;
-    padding: 20px 16px !important; /* padding laterale uguale a navbar */
+    padding: 16px 16px 24px 16px !important;
     justify-content: flex-start !important;
     align-items: stretch !important;
     background-image: none !important;
     border-radius: 10px !important;
-    padding: 5px !important;
   }
   
   .hero-content {
     width: 100% !important;
-    padding: 0 !important;
+    padding: 24px 0 8px 0 !important; /* padding-top per staccare logo dalla navbar */
     order: 1 !important;
-    margin-bottom: 24px !important;
+    margin-bottom: 32px !important; /* più distanza tra hero-content e hero-chat */
     text-align: center !important;
   }
 
@@ -1529,7 +1554,7 @@
   }
 
   .description {
-    font-size: 1rem !important;
+    display: none;
   }
   
   .chat-background {
@@ -1542,6 +1567,11 @@
     margin-bottom: 0 !important;
     order: 2 !important;
     box-shadow: none !important;
+    height: 70vh !important;
+  }
+
+  .hero-chat.chat-active {
+    height: 1000vh !important;
   }
   
   .hero-text {
@@ -1550,9 +1580,9 @@
   }
   
   .hero-logo {
-    width: 60% !important;
-    max-width: 200px !important;
-    margin: 0 auto 20px !important;
+    width: 100px !important;
+    max-width: 150px !important;
+    margin: 0 auto 16px !important;
   }
   
   /* Chi Siamo */
@@ -1654,9 +1684,8 @@
   .studio-content {
     width: 90% !important;
     text-align: center !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    padding: 20px !important;
+
+    padding: 15px !important;
   }
   
   .studio-content-castelfranco .studio-links,
