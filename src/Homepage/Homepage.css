@@ -394,7 +394,7 @@
         linear-gradient(90deg, rgba(12, 0, 79, 0.03) 1px, transparent 1px),
         linear-gradient(0deg, rgba(12, 0, 79, 0.03) 1px, transparent 1px);
     background-size: 20px 20px;
-    overflow-y: hidden; /* remove inner scrollbar; page scrolls instead */
+    overflow-y: auto; /* permette scroll verticale nella chat */
 }
 
 .message {
@@ -1568,11 +1568,19 @@
     margin-bottom: 0 !important;
     order: 2 !important;
     box-shadow: none !important;
-    height: 70vh !important;
+    height: 60vh !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
 
   .hero-chat.chat-active {
-    height: 1000vh !important;
+    height: 70vh !important;
+  }
+  
+  .chat-messages {
+    overflow-y: auto !important;
+    flex: 1 !important;
+    min-height: 0 !important;
   }
   
   .hero-text {
