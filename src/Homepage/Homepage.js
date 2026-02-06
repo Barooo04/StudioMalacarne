@@ -342,6 +342,29 @@ const Homepage = () => {
         </div>
         <div className={`chat-background  ${isChatActive ? 'chat-active' : ''}`}></div>
         <div className={`hero-chat ${isChatActive ? 'chat-active' : ''}`}>
+          <div className="chat-header-buttons">
+            <button 
+              className="chat-new-btn"
+              onClick={() => {
+                setMessages([{ id: 1, text: "Ciao! Come posso aiutarti oggi?", isAssistant: true }]);
+                setThreadId(null);
+                setShowQuickQuestions(true);
+              }}
+              aria-label="Nuova chat"
+            >
+              Nuova chat
+            </button>
+            <button 
+              className="chat-close-btn"
+              onClick={() => {
+                setIsChatActive(false);
+                setShowQuickQuestions(true);
+              }}
+              aria-label="Chiudi chat"
+            >
+              <FontAwesomeIcon icon={faTimes} />
+            </button>
+          </div>
           <div className="chat-messages" >
             {messages.map((message) => (
               <div key={message.id} className={`message ${message.isAssistant ? 'assistant' : 'user'}`}>
@@ -362,7 +385,7 @@ const Homepage = () => {
                 </div>
               </div>
             )}
-            {showQuickQuestions && (
+            {showQuickQuestions && !isChatActive && (
               <div className="quick-questions">
                 <p className="quick-questions-title">Domande Frequenti:</p>
                 <div className="quick-questions-buttons">
@@ -654,6 +677,7 @@ const Homepage = () => {
         <div className="footer-container">
           <div className="footer-section">
             <img src={logo} alt="Studio Malacarne" className="footer-logo" />
+            <p className="footer-studio-name">STUDIO MALACARNE</p>
             <form className="footer-contact-form">
               <input 
                 type="text" 

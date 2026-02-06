@@ -544,6 +544,54 @@
     background-color: #2a92a4;
 }
 
+/* Header bottoni chat (Nuova chat + X) */
+.chat-header-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #eee;
+    border-radius: 10px 10px 0 0;
+}
+
+/* Pulsante Nuova chat */
+.chat-new-btn {
+    padding: 6px 14px;
+    background-color: #248193;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.chat-new-btn:hover {
+    background-color: #2a92a4;
+}
+
+/* Pulsante X per chiudere la chat */
+.chat-close-btn {
+    display: flex;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.08);
+    border: none;
+    color: #248193;
+    font-size: 0.9rem;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+}
+
+.chat-close-btn:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
 .chi-siamo-container {
     width: 100%;
     display: flex;
@@ -1038,8 +1086,17 @@
 }
 
 .footer-logo {
-    width: 200px;
-    margin-bottom: 20px;
+    width: 100px;
+    margin-bottom: 10px;
+}
+
+.footer-studio-name {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: white;
+    margin: 0 0 20px 0;
+    padding: 0;
+    letter-spacing: 1px;
 }
 
 .footer-contact-form {
@@ -1563,24 +1620,42 @@
   }
   
   .hero-chat {
-    width: 100% !important;
-    margin-right: 0 !important;
+    width: calc(100% - 32px) !important; /* margini laterali uguali */
+    margin-left: 16px !important;
+    margin-right: 16px !important;
     margin-bottom: 0 !important;
     order: 2 !important;
     box-shadow: none !important;
     height: 60vh !important;
     display: flex !important;
     flex-direction: column !important;
+    position: relative !important;
   }
 
   .hero-chat.chat-active {
-    height: 70vh !important;
+    height: calc(100vh - 80px) !important; /* chat quasi a tutto schermo */
+    margin-top: 0 !important;
+  }
+  
+  /* Nasconde hero-content quando la chat è attiva su mobile */
+  .hero-content.chat-active {
+    display: none !important;
   }
   
   .chat-messages {
     overflow-y: auto !important;
     flex: 1 !important;
     min-height: 0 !important;
+  }
+  
+  /* Header bottoni chat su mobile */
+  .chat-header-buttons {
+    padding: 8px 12px !important;
+  }
+  
+  .chat-new-btn {
+    font-size: 0.8rem !important;
+    padding: 5px 12px !important;
   }
   
   .hero-text {
@@ -1763,8 +1838,8 @@
   }
   
   .footer-logo {
-    width: 150px !important;
-    margin-bottom: 20px !important;
+    width: 80px !important;
+    margin-bottom: 15px !important;
     margin-left: auto !important;
     margin-right: auto !important;
     display: block !important;
