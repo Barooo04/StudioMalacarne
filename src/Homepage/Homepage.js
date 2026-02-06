@@ -16,6 +16,7 @@ import studioCastelfranco from '../Images/studioCastelfranco.png';
 const Homepage = () => {
   const chatInputRef = useRef(null);
   const servicesSectionRef = useRef(null);
+  const abortControllerRef = useRef(null); // Per cancellare richieste in corso
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [threadId, setThreadId] = useState(null);
   const [messages, setMessages] = useState([
@@ -55,6 +56,15 @@ const Homepage = () => {
   const handleSendMessage = async (message) => {
     if (!message.trim()) return;
 
+    // Cancella eventuali richieste precedenti in corso
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    
+    // Crea un nuovo AbortController per questa richiesta
+    const abortController = new AbortController();
+    abortControllerRef.current = abortController;
+
     setIsChatActive(true);
     setMessages(prev => [...prev, { 
       id: prev.length + 1, 
@@ -76,7 +86,8 @@ const Homepage = () => {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ message: message })
+          body: JSON.stringify({ message: message }),
+          signal: abortController.signal
         });
 
         if (!sessionResponse.ok) {
@@ -101,7 +112,8 @@ const Homepage = () => {
         body: JSON.stringify({ 
           threadId: currentThreadId, 
           message: message 
-        })
+        }),
+        signal: abortController.signal
       });
 
       if (!conv.ok) {
@@ -138,7 +150,8 @@ const Homepage = () => {
                       Array.isArray(msg.content) ? msg.content[0]?.text?.value || '' :
                       msg.content?.text?.value || ''
             }))
-          })
+          }),
+          signal: abortController.signal
         });
 
         let infoData;
@@ -201,6 +214,11 @@ const Homepage = () => {
         }
       }
     } catch (error) {
+      // Se la richiesta è stata cancellata (es. cliccato "Nuova chat"), non mostrare errore
+      if (error.name === 'AbortError') {
+        console.log("Richiesta cancellata");
+        return;
+      }
       console.error("Errore:", error);
       setIsTyping(false);
       setMessages(prev => [...prev, { 
@@ -346,6 +364,11 @@ const Homepage = () => {
             <button 
               className="chat-new-btn"
               onClick={() => {
+                // Cancella eventuali richieste in corso
+                if (abortControllerRef.current) {
+                  abortControllerRef.current.abort();
+                  abortControllerRef.current = null;
+                }
                 // Reset completo della chat
                 setMessages([{ id: 1, text: "Ciao! Come posso aiutarti oggi?", isAssistant: true }]);
                 setThreadId(null);
