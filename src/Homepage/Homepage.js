@@ -346,8 +346,11 @@ const Homepage = () => {
             <button 
               className="chat-new-btn"
               onClick={() => {
+                // Reset completo della chat
                 setMessages([{ id: 1, text: "Ciao! Come posso aiutarti oggi?", isAssistant: true }]);
                 setThreadId(null);
+                setIsTyping(false);
+                setIsChatActive(false);
                 setShowQuickQuestions(true);
               }}
               aria-label="Nuova chat"
@@ -358,7 +361,10 @@ const Homepage = () => {
               className="chat-close-btn"
               onClick={() => {
                 setIsChatActive(false);
-                setShowQuickQuestions(true);
+                // Mostra domande frequenti solo se non ci sono stati messaggi utente
+                if (messages.length <= 1) {
+                  setShowQuickQuestions(true);
+                }
               }}
               aria-label="Chiudi chat"
             >
