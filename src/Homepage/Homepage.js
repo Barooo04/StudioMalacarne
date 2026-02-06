@@ -27,7 +27,7 @@ const Homepage = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const messagesEndRef = useRef(null);
 
-  const API = "https://servermalacarne.onrender.com";
+  const API = "https://servermalacarne.onrender.com/api";
 
   const scrollToBottom = () => {
     const messageContainer = document.querySelector('.chat-messages');
